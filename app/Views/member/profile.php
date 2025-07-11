@@ -28,7 +28,7 @@
         <div class="relative">
             <input type="tel" name="phone" id="phone"
                 value="<?= esc($member['phone']) ?>"
-                class="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md placeholder-transparent focus:border-blue-500 focus:ring-0"
+                class="peer w-full px-4 pt-2 pb-2 border border-gray-300 rounded-md placeholder-transparent focus:border-blue-500 focus:ring-0"
                 placeholder="<?= lang('Membership.phone_number') ?>" required />
         </div>
 

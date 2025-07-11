@@ -27,7 +27,10 @@ class Filters extends BaseFilters
      */
     public function __construct()
     {
-        service('request')->setLocale(session('lang') ?? 'en');
+        // service('request')->setLocale(session('lang') ?? 'en');
+        if (PHP_SAPI !== 'cli') {
+            service('request')->setLocale(session('lang') ?? 'en');
+        }
     }
 
     public array $aliases = [

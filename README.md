@@ -107,6 +107,11 @@ CREATE TABLE `members` (
   `created_at` DATETIME
 );
 ```  
+### Database seeder  
+```
+php spark db:seed AdminSeeder
+```  
+
 4. Jalankan Development Server  
 ```
 php spark serve

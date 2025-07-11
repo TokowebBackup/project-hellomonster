@@ -1,31 +1,76 @@
 <?php
 
+/**
+ * @modify by PujiErmanto<pujiermanto@gmail.com> | AKA Nasi Goreng Ma Yayah | AKA Agus Kolega iwan fals | AKA DADANG
+ */
+
 use CodeIgniter\Router\Routes;
 
-// Exclude feature
+/*
+|--------------------------------------------------------------------------
+| Global Routes
+|--------------------------------------------------------------------------
+*/
+
+$routes->get('/', 'Home::index');
 $routes->post('language', 'Language::switch');
 
-// First Home
-$routes->get('/', 'Home::index');
+/*
+|--------------------------------------------------------------------------
+| Dashboard & Admin 
+|--------------------------------------------------------------------------
+*/
+$routes->group('admin', function ($routes) {
+    $routes->get('login', 'Admin::login');
+    $routes->post('login', 'Admin::doLogin');
+    $routes->get('logout', 'Admin::logout');
 
-// Membership home & All Feature
-$routes->get('/membership', 'Membership::index');
-$routes->get('/membership/create', 'Membership::create');
-$routes->post('/membership/register', 'Membership::register');
-$routes->get('/membership/activate/(:any)', 'Membership::activate/$1');
-$routes->get('/membership/create-password', 'Membership::createPassword');
-$routes->post('/membership/save-password', 'Membership::savePassword');
-// Membership login
-$routes->get('/membership/login', 'Membership::loginForm');
-$routes->post('/membership/login', 'Membership::login');
-$routes->post('membership/check', 'Membership::check');
-$routes->get('/membership/dashboard', 'Membership::dashboard');
-$routes->get('/membership/profile', 'Membership::profile');
-$routes->post('/membership/profile', 'Membership::updateProfile');
-$routes->get('/logout', 'Membership::logout');
+    $routes->get('dashboard', 'Admin::dashboard');
+    $routes->get('members', 'Admin::members');
+});
 
-// Waiver
-$routes->get('waiver', 'Waiver::index');
-$routes->post('waiver/save', 'Waiver::save');
-$routes->get('/api/countries', 'Api\CountryApi::index');
-$routes->post('/api/cities', 'Api\CityApi::index');
+/*
+|--------------------------------------------------------------------------
+| Membership Routes
+|--------------------------------------------------------------------------
+*/
+$routes->group('membership', function ($routes) {
+    $routes->get('/', 'Membership::index');
+    $routes->get('create', 'Membership::create');
+    $routes->post('register', 'Membership::register');
+    $routes->get('activate/(:any)', 'Membership::activate/$1');
+    $routes->get('create-password', 'Membership::createPassword');
+    $routes->post('save-password', 'Membership::savePassword');
+
+    // Login & Auth
+    $routes->get('login', 'Membership::loginForm');
+    $routes->post('login', 'Membership::login');
+    $routes->post('check', 'Membership::check');
+
+    // Member Dashboard & Profile
+    $routes->get('dashboard', 'Membership::dashboard');
+    $routes->get('profile', 'Membership::profile');
+    $routes->post('profile', 'Membership::updateProfile');
+});
+
+$routes->get('logout', 'Membership::logout');
+
+/*
+|--------------------------------------------------------------------------
+| Waiver Routes
+|--------------------------------------------------------------------------
+*/
+$routes->group('waiver', function ($routes) {
+    $routes->get('/', 'Waiver::index');
+    $routes->post('save', 'Waiver::save');
+});
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
+$routes->group('api', function ($routes) {
+    $routes->get('countries', 'Api\CountryApi::index');
+    $routes->post('cities', 'Api\CityApi::index');
+});
