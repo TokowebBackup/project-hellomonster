@@ -37,6 +37,18 @@
         .font-primary {
             font-family: 'Jaro', sans-serif;
         }
+
+        .sidebar-mobile {
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-visible {
+            transform: translateX(0);
+        }
     </style>
 </head>
 
@@ -59,11 +71,19 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-6">
+        <main class="flex-1 px-4 sm:px-6 py-6">
+
             <header class="mb-6">
                 <h2 class="text-2xl font-semibold text-gray-800"><?= $title ?? 'Dashboard' ?></h2>
                 <p class="text-sm text-gray-500">Welcome, <?= session()->get('admin_name') ?></p>
             </header>
+
+            <!-- Mobile Navigation Toggle -->
+            <div class="md:hidden mb-4">
+                <button id="toggleSidebar" class="bg-primary text-white px-3 py-2 rounded">
+                    ☰ Menu
+                </button>
+            </div>
 
             <section>
                 <?= $this->renderSection('content') ?>
@@ -71,6 +91,12 @@
         </main>
     </div>
 
+    <script>
+        document.getElementById("toggleSidebar")?.addEventListener("click", () => {
+            const sidebar = document.querySelector("aside");
+            sidebar.classList.toggle("hidden");
+        });
+    </script>
 </body>
 
 </html>

@@ -1,10 +1,12 @@
 <?= $this->extend('layouts/member') ?>
 <?= $this->section('content') ?>
 
-<div class="max-w-xl mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Selamat Datang, <?= esc($member['name'] ?? $member['email']) ?></h1>
+<div class="max-w-xl mx-auto px-4 sm:px-0">
+    <h1 class="text-2xl font-bold mb-4 sm:text-3xl text-center sm:text-left">
+        Selamat Datang, <?= esc($member['name'] ?? $member['email']) ?>
+    </h1>
 
-    <div class="bg-white shadow rounded-lg p-6 space-y-4">
+    <div class="bg-white shadow rounded-lg p-4 sm:p-6 space-y-4 text-sm sm:text-base">
 
         <div>
             <p class="font-semibold">Nama:</p>

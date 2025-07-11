@@ -77,3 +77,8 @@ $routes->group('api', function ($routes) {
 
 
 $routes->post('/membership/payment-callback', 'Membership::paymentCallback');
+
+$routes->set404Override(function () {
+    // Jika ingin menampilkan custom view
+    return view('errors/html/custom_404');
+});

@@ -14,6 +14,7 @@ class Membership extends BaseController
         if ($this->request->getGet('success')) {
             session()->setFlashdata('message', 'Pendaftaran berhasil! Silakan cek email untuk aktivasi akun.');
         }
+
         return view('membership');
     }
 
@@ -315,6 +316,9 @@ class Membership extends BaseController
                 // Tambahkan flashdata jika ingin tampilkan di frontend (opsional)
                 session()->setFlashdata('warning', 'Email aktivasi gagal dikirim. Silakan cek kembali pengaturan email Anda.');
             }
+
+            session()->set('waiver_member_id', $memberId);
+            session()->set('waiver_step_1', true);
 
             return redirect()->to('/waiver?id=' . $memberId);
         }
