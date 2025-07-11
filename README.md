@@ -3,8 +3,8 @@
 
 **Hellomonster** adalah platform pendaftaran anggota berbasis web dengan sistem waiver form (formulir persetujuan) yang modern. Proyek ini dibangun menggunakan **CodeIgniter 4** dan **Tailwind CSS**, dan dirancang untuk memproses pendaftaran member dengan verifikasi email, form dua langkah, serta dashboard pribadi bagi setiap member.
 
-## 🌐 Live Demo (jika tersedia)
-_(Tambahkan URL jika project telah dideploy)_
+## 🌐 Live Demo
+[!Hellomonster](https://hellomonster.tokoweb.live/)
 
 ## 🚀 Fitur Utama
 
