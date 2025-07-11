@@ -128,6 +128,18 @@ Akses di browser: http://localhost:8080
 
 - Login ke dashboard dan edit profil
 
+
+#### Simulate Payment  
+***Gunakan credit / debit card***
+```
+| Data        | Nilai                 |
+| ----------- | --------------------- |
+| Nomor Kartu | `4811 1111 1111 1114` |
+| Expiry Date | `12/30` (bebas)       |
+| CVV         | `123`                 |
+| OTP         | `112233`              |
+```
+
 📌 Catatan
 Semua data member hanya dapat diakses setelah aktivasi email.
 

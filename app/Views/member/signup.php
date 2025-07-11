@@ -2,7 +2,11 @@
 <?= $this->section('content') ?>
 
 <h2 class="font-bold text-xl mb-6"><?= lang('Text.signup_title') ?></h2>
-
+<?php if (session()->getFlashdata('error')) : ?>
+    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
+        <?= session()->getFlashdata('error') ?>
+    </div>
+<?php endif; ?>
 <form id="signupForm" action="/membership/register" method="post" class="space-y-6 text-left">
     <?= csrf_field() ?>
 

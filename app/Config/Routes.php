@@ -74,3 +74,6 @@ $routes->group('api', function ($routes) {
     $routes->get('countries', 'Api\CountryApi::index');
     $routes->post('cities', 'Api\CityApi::index');
 });
+
+
+$routes->post('/membership/payment-callback', 'Membership::paymentCallback');

@@ -81,7 +81,12 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
-            'csrf',
+            'csrf' => [
+                // Added by me Puji Ermanto<pujiermanto@gmail.com> | AKA Jhony Rotten | Jhony Was Here
+                'except' => [
+                    'membership/payment-callback',
+                ],
+            ],
         ],
         'after' => [
             // 'honeypot',
