@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Member - Hellomonster</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="<?= base_url('/assets/favicon.ico') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
 
     <script>
