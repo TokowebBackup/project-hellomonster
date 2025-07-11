@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'edit_profile_title' => 'Edit Profile',
+    'back_home' => 'Back to Home',
+    'email' => 'Email',
+    'full_name' => 'Full Name',
+    'phone_number' => 'Phone Number',
+    'birthdate' => 'Date of Birth',
+    'country' => 'Country',
+    'city' => 'City',
+    'address' => 'Address',
+    'save_changes' => 'Save Changes',
+    'back_to_dashboard' => 'Back to Dashboard',
+    'waiver_title' => 'Waiver Form',
+    'step_1' => '1. Basic Information',
+    'step_2' => '2. Additional Information',
+    'next' => 'Next',
+    'full_name' => 'Full Name',
+    'phone_number' => 'Phone Number',
+    'birthdate' => 'Birthdate',
+    'country' => 'Country',
+    'city' => 'City',
+    'address' => 'Address',
+    'back' => 'Back',
+    'submit' => 'Submit',
+    'loading_countries' => 'Loading countries...',
+    'loading_cities' => 'Loading cities...',
+    'select_country_first' => 'Select country first...',
+    'select_city' => 'Select city...',
+    'fetch_cities_failed' => 'Failed to load cities',
+    "agree_terms" => "I confirm that the information I’ve submitted is accurate and I agree to follow all the rules and policies of the Hellomonster.id platform. I understand that Hellomonster will not be held responsible for any consequences arising from my violation of these policies."
+];

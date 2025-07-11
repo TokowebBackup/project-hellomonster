@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Dashboard Member - Hellomonster</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+
     <script>
         tailwind.config = {
             safelist: [
@@ -12,7 +14,16 @@
                 'text-white', 'rounded-md',
                 'font-semibold', 'font-secondary',
                 'bg-green-100', 'text-green-700',
-                'bg-red-100', 'text-red-700'
+                'bg-red-100', 'text-red-700',
+                'peer-placeholder-shown:top-4',
+                'peer-placeholder-shown:text-base',
+                'peer-placeholder-shown:text-gray-400',
+                'peer-focus:top-2',
+                'peer-focus:text-sm',
+                'peer-focus:text-blue-500',
+                'peer-[value=\'\']:top-4',
+                'peer-[value=\'\']:text-base',
+                'peer-[value=\'\']:text-gray-400'
             ],
             theme: {
                 extend: {
@@ -62,9 +73,25 @@
         <!-- Navbar -->
         <header class="bg-white shadow p-4">
             <div class="container mx-auto flex justify-between items-center">
-                <div class="font-bold text-lg">Hellomonster Member</div>
-                <a href="/logout" class="text-sm text-red-500 hover:underline">Logout</a>
-            </div>
+                <div class="font-bold text-lg">
+                    <a href="/">
+                        <img src="<?= base_url(); ?>/assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e5.png" alt="hellomonster-logo" class="w-24 h-auto">
+                    </a>
+                </div>
+                <div class="flex items-center gap-4">
+
+                    <!-- Language Selector -->
+                    <form action="<?= base_url('language') ?>" method="post">
+                        <?= csrf_field() ?>
+                        <select name="lang" onchange="this.form.submit()" class="text-sm border border-gray-300 px-2 py-1 rounded">
+                            <option value="en" <?= service('request')->getLocale() === 'en' ? 'selected' : '' ?>>English</option>
+                            <option value="id" <?= service('request')->getLocale() === 'id' ? 'selected' : '' ?>>Indonesia</option>
+                        </select>
+                    </form>
+
+                    <!-- Logout -->
+                    <a href="/logout" class="text-sm text-red-500 hover:underline">Logout</a>
+                </div>
         </header>
 
         <!-- Content -->
@@ -77,6 +104,15 @@
             &copy; <?= date('Y') ?> Hellomonster. All rights reserved.
         </footer>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+    </script>
 </body>
 
 </html>

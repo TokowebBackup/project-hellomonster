@@ -10,20 +10,38 @@
     </div>
 <?php endif; ?>
 
-<form action="/membership/login" method="post" onsubmit="return showLoading()" class=" bg-white p-6 rounded shadow-md space-y-4 max-w-md">
+<form action="/membership/login" method="post" onsubmit="return showLoading()" class="bg-white p-6 rounded shadow-md space-y-6 max-w-md">
     <?= csrf_field() ?>
 
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" name="email" required class="w-full border px-3 py-2 rounded-md">
+    <!-- Email -->
+    <div class="relative">
+        <input type="email" name="email" id="email"
+            class="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md placeholder-transparent focus:border-blue-500 focus:ring-0"
+            placeholder="Email" required />
+        <label for="email"
+            class="absolute left-4 top-2 text-sm text-gray-500 transition-all
+                   peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                   peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-500">
+            Email
+        </label>
     </div>
 
-    <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" name="password" required class="w-full border px-3 py-2 rounded-md">
+    <!-- Password -->
+    <div class="relative">
+        <input type="password" name="password" id="password"
+            class="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md placeholder-transparent focus:border-blue-500 focus:ring-0"
+            placeholder="Password" required />
+        <label for="password"
+            class="absolute left-4 top-2 text-sm text-gray-500 transition-all
+                   peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                   peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-500">
+            Password
+        </label>
     </div>
 
-    <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700">Login</button>
+    <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700">
+        Login
+    </button>
 </form>
 
 <a href="/membership" class="block mt-4 text-blue-600 hover:underline">← Kembali</a>
@@ -35,17 +53,9 @@
 
 <script>
     function showLoading() {
-        const overlay = document.getElementById('loadingOverlay');
-        overlay.classList.remove('hidden');
-        return true; // lanjutkan submit form
+        document.getElementById('loadingOverlay').classList.remove('hidden');
+        return true;
     }
-
-    const loginForm = document.querySelector('form');
-    const loadingOverlay = document.getElementById('loadingOverlay');
-
-    loginForm.addEventListener('submit', function() {
-        loadingOverlay.classList.remove('hidden');
-    });
 </script>
 
 <?= $this->endSection() ?>

@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'text_back_home' => 'Atau',
+    'back_home' => 'Kembali ke halaman utama',
     'enter_email_message' => "Masukkan alamat email Anda dan kami akan periksa apakah Anda sudah punya akun.",
     'placeholder_email' => "Masukkan email Anda",
     'buy_membership' => "Beli Membership",

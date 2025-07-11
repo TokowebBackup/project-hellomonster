@@ -7,13 +7,27 @@
     <title><?= $title ?? 'Hellomonster' ?></title>
     <!-- Harus di atas dulu -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- intl-tel-input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+
 
     <script>
         tailwind.config = {
             safelist: [
                 'bg-primary', 'bg-blue-700',
                 'text-white', 'rounded-md',
-                'font-semibold', 'font-secondary'
+                'font-semibold', 'font-secondary',
+                'bg-green-100', 'text-green-700',
+                'bg-red-100', 'text-red-700',
+                'peer-placeholder-shown:top-4',
+                'peer-placeholder-shown:text-base',
+                'peer-placeholder-shown:text-gray-400',
+                'peer-focus:top-2',
+                'peer-focus:text-sm',
+                'peer-focus:text-blue-500',
+                'peer-[value=\'\']:top-4',
+                'peer-[value=\'\']:text-base',
+                'peer-[value=\'\']:text-gray-400'
             ],
             theme: {
                 extend: {
@@ -52,6 +66,24 @@
         .font-secondary {
             font-family: var(--font-secondary);
         }
+
+        .iti {
+            width: 100%;
+            position: relative;
+        }
+
+        .iti__country-list {
+            max-height: 250px;
+            /* batasi tinggi dropdown */
+            overflow-y: auto;
+            /* biar scrollable */
+            z-index: 1000;
+            /* pastikan dropdown muncul di atas */
+        }
+
+        .iti input {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -78,8 +110,14 @@
     <div class="mt-6 bg-white shadow-lg p-10 rounded-lg text-center space-y-6 w-[500px] max-w-full">
         <?= $this->renderSection('content') ?>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+    </script>
 </body>
-
-
 
 </html>

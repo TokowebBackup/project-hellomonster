@@ -1,15 +1,22 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
 
-<h2 class="font-bold text-xl"><?= lang('Text.signup_title') ?></h2>
+<h2 class="font-bold text-xl mb-6"><?= lang('Text.signup_title') ?></h2>
 
-<form id="signupForm" action="/membership/register" method="post" class="space-y-5 text-left">
+<form id="signupForm" action="/membership/register" method="post" class="space-y-6 text-left">
     <?= csrf_field() ?>
 
-    <div>
-        <label class="block text-sm text-gray-700 mb-1"><?= lang('Text.email') ?></label>
-        <input type="email" name="email" required
-            class="block w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-700" />
+    <!-- Email Floating Input -->
+    <div class="relative">
+        <input type="email" name="email" id="email"
+            class="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md placeholder-transparent focus:border-blue-500 focus:ring-0"
+            placeholder="<?= lang('Text.email') ?>" required />
+        <label for="email"
+            class="absolute left-4 top-2 text-sm text-gray-500 transition-all
+                   peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400
+                   peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-500">
+            <?= lang('Text.email') ?>
+        </label>
     </div>
 
     <button type="submit"
@@ -38,8 +45,6 @@
         <span class="text-lg font-medium">Mengirim email aktivasi...</span>
     </div>
 </div>
-
-
 
 <script>
     document.getElementById('signupForm').addEventListener('submit', function() {

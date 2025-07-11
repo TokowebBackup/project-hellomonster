@@ -39,6 +39,11 @@ class Autoload extends AutoloadConfig
      */
     public $psr4 = [
         APP_NAMESPACE => APPPATH,
+        /**
+         * @author PujiErmanto<pujiermanto@gmail.com> | AKA Vickeerneess | AKA Kolega Iwan Fals
+         * new add by me
+         */
+        'App\Controllers\Api' => APPPATH . 'Controllers/Api',
     ];
 
     /**

@@ -31,6 +31,11 @@
     <?= lang('Text.already_account') ?>
     <a href="/membership/login" class="text-blue-500 hover:underline"><?= lang('Text.login') ?></a>
   </p>
+
+  <p class="text-sm mt-4">
+    <?= lang('Text.text_back_home') ?>
+    <a href="/" class="text-blue-500 hover:underline"><?= lang('Text.back_home') ?></a>
+  </p>
 <?php endif; ?>
 
 
