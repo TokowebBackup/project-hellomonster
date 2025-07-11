@@ -1,4 +1,5 @@
 # Hellomonster Waiver System
+<img width="1915" height="862" alt="Screenshot 2025-07-11 142134" src="https://github.com/user-attachments/assets/593553a6-312a-41f7-b818-e55636b68561" />
 
 **Hellomonster** adalah platform pendaftaran anggota berbasis web dengan sistem waiver form (formulir persetujuan) yang modern. Proyek ini dibangun menggunakan **CodeIgniter 4** dan **Tailwind CSS**, dan dirancang untuk memproses pendaftaran member dengan verifikasi email, form dua langkah, serta dashboard pribadi bagi setiap member.
 
