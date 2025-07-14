@@ -41,8 +41,7 @@
             </div>
 
             <div class="mb-6">
-
-                <select name="city" id="city" required class="w-full border px-3 py-2 rounded-md">
+                <select name="city" id="city" required class="select2 w-full border px-3 py-2 rounded-md">
                     <option value=""><?= lang('Membership.select_country_first') ?></option>
                 </select>
             </div>
@@ -85,6 +84,7 @@
         </div>
     </form>
 </div>
+
 
 
 <script>

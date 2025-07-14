@@ -22,12 +22,12 @@
       <?= lang('Text.next') ?>
     </button>
   </form>
-
+  <!-- 
   <a
     href="/membership"
     class="block w-full py-2 text-center bg-softgray text-gray-700 rounded-md hover:bg-gray-300 font-semibold font-secondary">
     <?= lang('Text.buy_membership') ?>
-  </a>
+  </a> -->
 </div>
 
 <!-- ✅ Loading Overlay -->

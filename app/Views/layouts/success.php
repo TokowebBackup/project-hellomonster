@@ -31,7 +31,8 @@
                 'peer-focus:text-blue-500',
                 'peer-[value=\'\']:top-4',
                 'peer-[value=\'\']:text-base',
-                'peer-[value=\'\']:text-gray-400'
+                'peer-[value=\'\']:text-gray-400',
+                'text-emerald-600', 'text-emerald-800',
             ],
             theme: {
                 extend: {
@@ -115,27 +116,10 @@
     </style>
 </head>
 
-<body class="flex flex-col items-center justify-center min-h-screen bg-white p-6">
-
-    <!-- Top Bar -->
-    <div class="relative w-[500px] max-w-full px-4">
-
-        <!-- Language Selector (kanan atas) -->
-        <form action="<?= base_url('language') ?>" method="post" class="absolute top-4 right-6">
-            <?= csrf_field() ?>
-            <select name="lang" onchange="this.form.submit()" class="text-sm border border-gray-300 px-2 py-1 rounded">
-                <option value="en" <?= service('request')->getLocale() === 'en' ? 'selected' : '' ?>>English</option>
-                <option value="id" <?= service('request')->getLocale() === 'id' ? 'selected' : '' ?>>Indonesia</option>
-            </select>
-        </form>
-
-        <!-- Logo + Version -->
-        <div class="text-sm text-gray-400 mb-1">v<?= env('app.version') ?></div>
-        <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e4.png') ?>" alt="Logo" class="w-[60%]" />
-    </div>
+<body class="flex flex-col items-center justify-center min-h-screen bg-teal-100 p-6">
 
     <!-- Content -->
-    <div class="mt-6 bg-white shadow-lg p-10 rounded-lg text-center space-y-6 w-[500px] max-w-full">
+    <div class="mt-6 p-10 rounded-lg text-center space-y-6 w-[500px] max-w-full">
         <?= $this->renderSection('content') ?>
     </div>
 

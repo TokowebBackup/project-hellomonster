@@ -35,25 +35,25 @@ $routes->group('admin', function ($routes) {
 |--------------------------------------------------------------------------
 */
 $routes->group('membership', function ($routes) {
-    $routes->get('/', 'Membership::index');
-    $routes->get('create', 'Membership::create');
-    $routes->post('register', 'Membership::register');
-    $routes->get('activate/(:any)', 'Membership::activate/$1');
-    $routes->get('create-password', 'Membership::createPassword');
-    $routes->post('save-password', 'Membership::savePassword');
+    // $routes->get('/', 'Membership::index');
+    // $routes->get('create', 'Membership::create');
+    // $routes->post('register', 'Membership::register');
+    // $routes->get('activate/(:any)', 'Membership::activate/$1');
+    // $routes->get('create-password', 'Membership::createPassword');
+    // $routes->post('save-password', 'Membership::savePassword');
 
-    // Login & Auth
-    $routes->get('login', 'Membership::loginForm');
-    $routes->post('login', 'Membership::login');
+    // // Login & Auth
+    // $routes->get('login', 'Membership::loginForm');
+    // $routes->post('login', 'Membership::login');
     $routes->post('check', 'Membership::check');
 
     // Member Dashboard & Profile
-    $routes->get('dashboard', 'Membership::dashboard');
-    $routes->get('profile', 'Membership::profile');
-    $routes->post('profile', 'Membership::updateProfile');
+    // $routes->get('dashboard', 'Membership::dashboard');
+    // $routes->get('profile', 'Membership::profile');
+    // $routes->post('profile', 'Membership::updateProfile');
 });
 
-$routes->get('logout', 'Membership::logout');
+// $routes->get('logout', 'Membership::logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +63,18 @@ $routes->get('logout', 'Membership::logout');
 $routes->group('waiver', function ($routes) {
     $routes->get('/', 'Waiver::index');
     $routes->post('save', 'Waiver::save');
+    $routes->get('children', 'Waiver::children');
+    $routes->post('children/add', 'Waiver::addChild');
+
+    // Crud Children
+    $routes->get('children/get/(:num)', 'Waiver::getChild/$1');
+    $routes->post('children/update/(:num)', 'Waiver::updateChild/$1');
+    $routes->post('children/delete/(:num)', 'Waiver::deleteChild/$1');
+
+    // Waiver Sign
+    $routes->get('sign', 'Waiver::sign');
+    $routes->post('sign/save', 'Waiver::saveSignature');
+    $routes->get('success', 'Waiver::success');
 });
 
 /*
@@ -76,7 +88,7 @@ $routes->group('api', function ($routes) {
 });
 
 
-$routes->post('/membership/payment-callback', 'Membership::paymentCallback');
+// $routes->post('/membership/payment-callback', 'Membership::paymentCallback');
 
 $routes->set404Override(function () {
     // Jika ingin menampilkan custom view

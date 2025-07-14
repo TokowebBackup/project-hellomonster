@@ -110,9 +110,51 @@ CREATE TABLE `members` (
   `address` TEXT,
   `activation_token` VARCHAR(64),
   `is_active` TINYINT(1) DEFAULT 0,
+  `agree_terms` TINYINT(1) DEFAULT 0,
   `created_at` DATETIME
 );
+
+CREATE TABLE `admins` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(150) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(150) NOT NULL,
+  `created_at` DATETIME DEFAULT NULL,
+  `updated_at` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `children` (
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `member_uuid` CHAR(36) NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
+  `birthdate` DATE NOT NULL,
+  `gender` ENUM('male', 'female') NOT NULL,
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE members
+MODIFY uuid CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+ALTER TABLE members
+ADD UNIQUE (uuid);
+
+CREATE TABLE signatures (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  member_uuid CHAR(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  signature TEXT NOT NULL,
+  signed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (member_uuid) REFERENCES members(uuid) ON DELETE CASCADE
+);
+
+ALTER TABLE signatures ADD UNIQUE (member_uuid);
 ```  
+### Database migrate  
+```
+php spark migrate
+```  
+
 ### Database seeder  
 ```
 php spark db:seed AdminSeeder
