@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
 
-<div class="max-w-xl mx-auto mt-10 bg-white px-4 py-6 sm:px-6 sm:py-8 rounded">
+<div class="max-w-xl mx-auto mt-10 bg-white px-4 py-2 sm:px-6 sm:py-8 rounded">
     <h2 class="text-xl font-bold mb-4"><?= lang('Membership.waiver_title') ?></h2>
 
     <form id="waiverForm" action="/waiver/save" method="post" class="space-y-6">

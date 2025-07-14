@@ -1,29 +1,39 @@
-<?= $this->extend('layouts/main') ?>
+<?= $this->extend('layouts/sign') ?>
 <?= $this->section('content') ?>
 
-<div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
-    <h2 class="text-xl font-bold mb-4 text-center">EXCLUSION AND CONSENT</h2>
-    <p class="text-sm text-gray-700 mb-6">
-        PLEASE READ THIS DOCUMENT CAREFULLY. By signing this waiver, you acknowledge that all data submitted is correct and complete, and you grant consent for Hellomonster.id to process the data in accordance with applicable regulations. You also agree to release Hellomonster from any legal claims if the information provided is false or misleading.
-    </p>
+<div class="max-w-2xl mx-auto p-6 rounded">
+    <div style="height: 50vh; overflow: auto;" class="text-left">
+        <h2 class="text-xl font-bold mb-4 text-left"><?= lang('Membership.header_exclusion') ?></h2>
+        <h6 class="text-xl font-normal mb-4 text-left"><?= lang('Membership.exclusion_title') ?></h6>
 
-    <p class="text-sm text-gray-700 mb-4">Please sign below:</p>
+        <!-- Scrollable Box untuk Waiver Panjang -->
+        <div class="text-sm text-gray-800 leading-relaxed mb-6 space-y-3">
+            <?= nl2br(lang('Membership.exclusion_notice')) ?>
+        </div>
 
-    <div class="border p-2 rounded bg-gray-50 mb-4">
-        <canvas id="signature-pad" class="w-full h-48 border rounded bg-white"></canvas>
-        <input type="hidden" id="csrf_token" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+        <p class="text-sm text-gray-700 mb-4"><?= lang('Membership.please_sign_below') ?></p>
+
+        <!-- Canvas Signature -->
+        <div class="border p-2 rounded bg-gray-50 mb-4">
+            <canvas id="signature-pad" class="w-full h-48 border rounded bg-white"></canvas>
+            <input type="hidden" id="csrf_token" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+        </div>
+
+        <!-- Checkbox Konfirmasi -->
+        <div class="mb-4 space-y-2">
+            <label class="flex items-start space-x-2">
+                <input type="checkbox" id="checkbox1" class="mt-1">
+                <span><?= lang('Membership.waiver_notice_en_id') ?></span>
+            </label>
+
+            <label class="flex items-start space-x-2">
+                <input type="checkbox" id="checkbox2" class="mt-1">
+                <span><?= lang('Membership.waiver_confirmation_truth') ?></span>
+            </label>
+        </div>
     </div>
-    <div class="mb-4 space-y-2">
-        <label class="flex items-start space-x-2">
-            <input type="checkbox" id="checkbox1" class="mt-1">
-            <span>This Waiver and Consent is executed in both English and Bahasa Indonesia. In the event of discrepancy, the Bahasa Indonesia version shall prevail.</span>
-        </label>
 
-        <label class="flex items-start space-x-2">
-            <input type="checkbox" id="checkbox2" class="mt-1">
-            <span>I certify and confirm that the information I have entered is accurate and true.</span>
-        </label>
-    </div>
+
     <div class="flex justify-between gap-2 mb-6">
         <button type="button" onclick="clearSignature()" class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 rounded">
             <?= lang('Membership.decline'); ?>

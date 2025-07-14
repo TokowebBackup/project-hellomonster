@@ -355,6 +355,21 @@ class Waiver extends BaseController
             'signature' => $signatureData
         ]);
 
+        try {
+            $email = \Config\Services::email();
+            $config = new \Config\Email();
+
+            $email->setFrom($config->fromEmail, $config->fromName ?? 'Hellomonster');
+            $email->setTo($member['email']);
+            $email->setSubject('Waiver Kamu Telah Diselesaikan!');
+
+            $message = view('emails/waiver_success', ['member' => $member]);
+            $email->setMessage($message);
+            $email->send();
+        } catch (\Throwable $e) {
+            log_message('error', 'Gagal mengirim email success waiver: ' . $e->getMessage());
+        }
+
         return $this->response->setJSON([
             'status' => 'success',
             'message' => 'Tanda tangan berhasil disimpan.'
@@ -368,6 +383,8 @@ class Waiver extends BaseController
         if (!$uuid) {
             return redirect()->to('/')->with('error', 'UUID tidak ditemukan.');
         }
+
+
 
         return view('member/waiver/success', [
             'title' => 'Success',
