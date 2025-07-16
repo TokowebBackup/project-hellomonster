@@ -112,6 +112,25 @@
             top: 0.5rem;
             right: 0.5rem;
         }
+
+        .created-at-style {
+            background-color: #eef6ff;
+            /* background biru muda misal */
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        .created-at-style span:first-child {
+            color: #2563eb;
+            /* biru lebih gelap */
+            font-weight: 600;
+        }
+
+        .created-at-style span:last-child {
+            color: #1d4ed8;
+            /* biru pekat */
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -131,7 +150,7 @@
 
         <!-- Logo + Version -->
         <div class="text-sm text-gray-400 mb-1">v<?= env('app.version') ?></div>
-        <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e4.png') ?>" alt="Logo" class="w-[60%]" />
+        <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e5.png') ?>" alt="Logo" class="w-[60%]" />
     </div>
 
     <!-- Content -->

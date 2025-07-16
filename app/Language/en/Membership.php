@@ -22,6 +22,20 @@ return [
     'birth_month' => 'Month',
     'birth_day' => 'Day',
     'birth_year' => 'Year',
+    'months' => [
+        1 => 'January',
+        2 => 'February',
+        3 => 'March',
+        4 => 'April',
+        5 => 'May',
+        6 => 'June',
+        7 => 'July',
+        8 => 'August',
+        9 => 'September',
+        10 => 'October',
+        11 => 'November',
+        12 => 'December',
+    ],
     'country' => 'Country',
     'city' => 'City',
     'address' => 'Address',
@@ -39,6 +53,9 @@ return [
     'edit' => 'Edit',
     'remove' => 'Remove',
     'birth_date' => 'Birth Date',
+    'day' => 'Day',
+    'month' => 'Month',
+    'year' => 'Year',
     'gender' => 'Gender',
     'male' => 'Male',
     'female' => 'Female',
@@ -56,8 +73,8 @@ return [
     'exclusion_title' => 'BY AGREEING TO THIS DOCUMENT, YOU ARE GRANTING EXCLUSION AND CONSENT FOR YOURSELF AND ANY MINOR (IF APPLICABLE) AS STATED BELOW.',
 
     'exclusion_notice' => <<<EOD
-In consideration of the services and facilities offered and/or provided by PT DREAMUS EDUTAINMENT INDONESIA, its shareholders, employees, directors, ...
-commissioners, agents, and all other authorized individuals or entities acting on their behalf (collectively referred to as "PTDUE"), I hereby, unconditionally and irrevocably, acknowledge and agree to the following terms in this document ("Exclusion and Consent"):
+In consideration of the services and facilities offered and/or provided by Hellomonster, its shareholders, employees, directors, ...
+commissioners, agents, and all other authorized individuals or entities acting on their behalf (collectively referred to as "HM"), I hereby, unconditionally and irrevocably, acknowledge and agree to the following terms in this document ("Exclusion and Consent"):
 
 CAPACITY AND AUTHORITY
 
@@ -67,37 +84,37 @@ With respect to the listed Minor (if any), I declare that I have full authority 
 
 ASSUMPTION AND ACKNOWLEDGEMENT OF ALL RISKS
 
-PTDUE is the provider of recreational services and facilities offered and/or provided at its locations, including but not limited to SuperPark Indonesia and Pororo Park Indonesia ("PTDUE Premises"), encompassing all activities such as trampolining, pedal cars, basketball, ninja courses, soccer games, rock climbing, slides, and other sports and recreational activities (collectively referred to as "PTDUE Facilities"). This includes the use, rental, or maintenance of any equipment or goods and participation in any activities (including but not limited to classes, instructions, and/or courses) ("PTDUE Activities") at the PTDUE Premises.
+HM is the provider of recreational services and facilities offered and/or provided at its locations, including but not limited to SuperPark Indonesia and Pororo Park Indonesia ("HM Premises"), encompassing all activities such as trampolining, pedal cars, basketball, ninja courses, soccer games, rock climbing, slides, and other sports and recreational activities (collectively referred to as "HM Facilities"). This includes the use, rental, or maintenance of any equipment or goods and participation in any activities (including but not limited to classes, instructions, and/or courses) ("HM Activities") at the HM Premises.
 
-I acknowledge and understand that PTDUE Activities involve potential hazards and many inherent risks that cannot be eliminated while participating in PTDUE Activities and/or utilizing PTDUE Facilities (as the case may be). Participation in PTDUE Activities and the use or misuse of PTDUE Facilities and/or PTDUE Premises poses significant risks to participants, including, but not limited to, injuries, fractures, wrist, arm, leg, ankle, back, head, and neck injuries, falls, concussions, spinal cord injuries, heart attacks, heat exhaustion, serious injuries, permanent disability, and even death. I, unconditionally and irrevocably, agree to participate in PTDUE Activities and/or use PTDUE Facilities and PTDUE Premises at my own risk, accepting full responsibility for all associated risks.
+I acknowledge and understand that HM Activities involve potential hazards and many inherent risks that cannot be eliminated while participating in HM Activities and/or utilizing HM Facilities (as the case may be). Participation in HM Activities and the use or misuse of HM Facilities and/or HM Premises poses significant risks to participants, including, but not limited to, injuries, fractures, wrist, arm, leg, ankle, back, head, and neck injuries, falls, concussions, spinal cord injuries, heart attacks, heat exhaustion, serious injuries, permanent disability, and even death. I, unconditionally and irrevocably, agree to participate in HM Activities and/or use HM Facilities and HM Premises at my own risk, accepting full responsibility for all associated risks.
 
 PROPER USE OF SERVICES AND FACILITIES
 
-I understand and agree that all PTDUE Facilities at the PTDUE Premises must be used responsibly, in accordance with all signage, directions, and instructions from PTDUE and its staff, employees, and agents, ensuring my safety, the safety of the minors under my responsibility, and the safety of others ("Proper Use").
+I understand and agree that all HM Facilities at the HM Premises must be used responsibly, in accordance with all signage, directions, and instructions from HM and its staff, employees, and agents, ensuring my safety, the safety of the minors under my responsibility, and the safety of others ("Proper Use").
 
 PROPERTY AND BELONGINGS
 
-I commit to safeguarding my personal belongings at the PTDUE Premises and unconditionally and irrevocably release PTDUE from any liability for any loss or damage to my property (regardless of cause) during participation in any PTDUE Activities and/or utilizing of the PTDUE Facilities (as the case may be).
+I commit to safeguarding my personal belongings at the HM Premises and unconditionally and irrevocably release HM from any liability for any loss or damage to my property (regardless of cause) during participation in any HM Activities and/or utilizing of the HM Facilities (as the case may be).
 
 HEALTH DECLARATION
 
-I represent, warrant, and guarantee that both I and the minors listed are in good health and physical condition and free from any medical conditions that might affect or impede our safe participation in any activity ("Good Health and Condition"). I unconditionally and irrevocably agree that anyone who is not in Good Health and Condition should not participate in any PTDUE Activities. In addition, I understand that for safety reasons, pregnant women, individuals with prior health issues, those weighing over 120kg, or wearing a cast are not permitted in PTDUE Facilities nor are they allowed to participate in any PTDUE Activities. I should seek medical advice if uncertain. I unconditionally and irrevocably agree to notify PTDUE staff if I reasonably believe that anyone at the PTDUE Premises may not be in Good Health and Condition.
+I represent, warrant, and guarantee that both I and the minors listed are in good health and physical condition and free from any medical conditions that might affect or impede our safe participation in any activity ("Good Health and Condition"). I unconditionally and irrevocably agree that anyone who is not in Good Health and Condition should not participate in any HM Activities. In addition, I understand that for safety reasons, pregnant women, individuals with prior health issues, those weighing over 120kg, or wearing a cast are not permitted in HM Facilities nor are they allowed to participate in any HM Activities. I should seek medical advice if uncertain. I unconditionally and irrevocably agree to notify HM staff if I reasonably believe that anyone at the HM Premises may not be in Good Health and Condition.
 
-I unconditionally and irrevocably agree to pay for and authorize PTDUE to take any necessary steps to protect my welfare and that of the minors under my care, including without limitation to administering emergency medical care and arranging for ambulance transportation.
+I unconditionally and irrevocably agree to pay for and authorize HM to take any necessary steps to protect my welfare and that of the minors under my care, including without limitation to administering emergency medical care and arranging for ambulance transportation.
 
 DUTY OF CARE AND SUPERVISION
 
-I understand that the use of PTDUE Facilities and/or participating in any PTDUE Activities (as the case may be) carries inherent risks and that anyone (including Minors) using PTDUE Facilities and/or participating in any PTDUE Activities (as the case may be) must be in Good Health and Condition and only engage in Proper Use of PTDUE Facilities and/or participation of any PTDUE Activities (as the case may be). I acknowledge that my actions, and those of the minors under my supervision, can cause harm or injury to others at the PTDUE Premises.
+I understand that the use of HM Facilities and/or participating in any HM Activities (as the case may be) carries inherent risks and that anyone (including Minors) using HM Facilities and/or participating in any HM Activities (as the case may be) must be in Good Health and Condition and only engage in Proper Use of HM Facilities and/or participation of any HM Activities (as the case may be). I acknowledge that my actions, and those of the minors under my supervision, can cause harm or injury to others at the HM Premises.
 
-I agree that minors must remain under my care and supervision while using PTDUE Facilities and/or participating in any PTDUE Activities (as the case may be). I declare and warrant that I am the parent or legal guardian of the minors in my group or have been duly authorized by the parent or legal guardian and assume the duties and responsibilities of a parent or legal guardian for the minors in my group.
+I agree that minors must remain under my care and supervision while using HM Facilities and/or participating in any HM Activities (as the case may be). I declare and warrant that I am the parent or legal guardian of the minors in my group or have been duly authorized by the parent or legal guardian and assume the duties and responsibilities of a parent or legal guardian for the minors in my group.
 
-I unconditionally and irrevocably acknowledge that PTDUE is not responsible for the care and supervision of unaccompanied minors at the PTDUE Premises, which remains the responsibility of the parent or legal guardian.
+I unconditionally and irrevocably acknowledge that HM is not responsible for the care and supervision of unaccompanied minors at the HM Premises, which remains the responsibility of the parent or legal guardian.
 
 Notwithstanding the above, I acknowledge that any minor under the age of 7 must be accompanied and supervised by a responsible adult aged 18 or older at all times.
 
 INDEMNIFICATION
 
-To the extent permitted by law, I unconditionally and irrevocably agree to indemnify, hold harmless, and defend PTDUE and its shareholders, officers, directors, commissioners, employees, agents, affiliates, successors, and assigns (collectively referred to as the "Indemnified Parties") from any and all losses, damages, liabilities, claims (including any claims made by or on behalf of minors under my care against PTDUE), actions, decisions, settlements, penalties, fines, costs, or expenses, including attorney's fees "incurred by the Indemnified Parties (collectively referred to as “Losses”), arising from or related to:
+To the extent permitted by law, I unconditionally and irrevocably agree to indemnify, hold harmless, and defend HM and its shareholders, officers, directors, commissioners, employees, agents, affiliates, successors, and assigns (collectively referred to as the "Indemnified Parties") from any and all losses, damages, liabilities, claims (including any claims made by or on behalf of minors under my care against HM), actions, decisions, settlements, penalties, fines, costs, or expenses, including attorney's fees "incurred by the Indemnified Parties (collectively referred to as “Losses”), arising from or related to:
 
 I. any breach or failure to fulfil any obligation by myself or any minor under my care under this agreement;
 
@@ -105,27 +122,27 @@ II. any negligent or more culpable acts or omissions (including any reckless or 
 
 III. any bodily injury, death of a person, or damage to real or tangible personal property caused by the negligent or more culpable acts or omissions of me or any Minor under my care (including reckless or intentional misconduct);
 
-IV. my or any Minor under my care's failure to comply with applicable laws, regulations, or codes of conduct in the use of PTDUE Facilities and/or participation of any PTDUE Activities (as the case may be); and/or
+IV. my or any Minor under my care's failure to comply with applicable laws, regulations, or codes of conduct in the use of HM Facilities and/or participation of any HM Activities (as the case may be); and/or
 
-V. any unaccompanied Minor at the PTDUE Venue where I have consented to the use of PTDUE Facilities and/or participation of any PTDUE Activities (as the case may be) without supervision.
+V. any unaccompanied Minor at the HM Venue where I have consented to the use of HM Facilities and/or participation of any HM Activities (as the case may be) without supervision.
 
 WAIVER, RELEASE, AND DISCHARGE
 
-To the extent permitted by law, I hereby expressly, unconditionally, and irrevocably agree, on behalf of myself and any Minor listed under my responsibility, to waive, release, discharge, and relinquish any and all claims, demands, or causes of action arising from, and the right to sue PTDUE and its shareholders, officers, directors, commissioners, employees, agents, insurers, and representatives (collectively referred to as the "Released Parties") from any and all claims, demands, causes of action, judgments, rights, costs, damages, debts, liabilities, expenses (including legal representation fees), losses, and liabilities of any kind, whether known or unknown, based on strict liability, negligence, or otherwise (collectively referred to as "Claims") that I may have against the Released Parties arising from, or in any way connected with, my use of PTDUE Facilities and/or participation of any PTDUE Activities (as the case may be), except where such Claims are proven to be directly caused by the wilful negligence of PTDUE.
+To the extent permitted by law, I hereby expressly, unconditionally, and irrevocably agree, on behalf of myself and any Minor listed under my responsibility, to waive, release, discharge, and relinquish any and all claims, demands, or causes of action arising from, and the right to sue HM and its shareholders, officers, directors, commissioners, employees, agents, insurers, and representatives (collectively referred to as the "Released Parties") from any and all claims, demands, causes of action, judgments, rights, costs, damages, debts, liabilities, expenses (including legal representation fees), losses, and liabilities of any kind, whether known or unknown, based on strict liability, negligence, or otherwise (collectively referred to as "Claims") that I may have against the Released Parties arising from, or in any way connected with, my use of HM Facilities and/or participation of any HM Activities (as the case may be), except where such Claims are proven to be directly caused by the wilful negligence of HM.
 
 CONSENT AND ACKNOWLEDGEMENT
 
-I agree that I will use PTDUE Facilities and participate in any PTDUE Activities (as the case may be) in a responsible manner, with respect for my own safety and the safety of others. I acknowledge that I may be held liable to others for injuries they sustain if such injuries result from my irresponsible, intentional, or negligent actions. I agree to cover any losses, including but not limited to material and immaterial damages, that occur to any part of PTDUE Facilities and/or participation of any PTDUE Activities (as the case may be) as a result of my irresponsible, intentional, or negligent behavior. If I am responsible for a Minor (whether as a parent, legal guardian, custodian, or otherwise), I agree to be bound by this Waiver and Consent on behalf of that Minor. I am responsible for the safety of the Minor and pledge to directly supervise them at all times.
+I agree that I will use HM Facilities and participate in any HM Activities (as the case may be) in a responsible manner, with respect for my own safety and the safety of others. I acknowledge that I may be held liable to others for injuries they sustain if such injuries result from my irresponsible, intentional, or negligent actions. I agree to cover any losses, including but not limited to material and immaterial damages, that occur to any part of HM Facilities and/or participation of any HM Activities (as the case may be) as a result of my irresponsible, intentional, or negligent behavior. If I am responsible for a Minor (whether as a parent, legal guardian, custodian, or otherwise), I agree to be bound by this Waiver and Consent on behalf of that Minor. I am responsible for the safety of the Minor and pledge to directly supervise them at all times.
 
 AUTHORIZATION TO USE IMAGES AND PERSONAL INFORMATION
 
-I acknowledge that PTDUE may operate closed-circuit television or cameras at PTDUE Premises, and I hereby unconditionally and irrevocably consent to the capture of images and videos for security purposes of myself and/or the Minor I have registered. I, unconditionally and irrevocably, agree that such images and videos will become the exclusive property of PTDUE, and I hereby consent to the collection, use, and disclosure of such personal information by PTDUE for security and review purposes, including, if necessary, the submission of such images and videos to authorities for further investigation.
+I acknowledge that HM may operate closed-circuit television or cameras at HM Premises, and I hereby unconditionally and irrevocably consent to the capture of images and videos for security purposes of myself and/or the Minor I have registered. I, unconditionally and irrevocably, agree that such images and videos will become the exclusive property of HM, and I hereby consent to the collection, use, and disclosure of such personal information by HM for security and review purposes, including, if necessary, the submission of such images and videos to authorities for further investigation.
 
 GENERAL
 
-This Waiver and Consent applies indefinitely, including today’s date and any future date when I or the registered minor may visit PTDUE Premises. It will also bind the heirs, representatives, and successors of the undersigned and the minor.
+This Waiver and Consent applies indefinitely, including today’s date and any future date when I or the registered minor may visit HM Premises. It will also bind the heirs, representatives, and successors of the undersigned and the minor.
 
-I will comply with all PTDUE signs, notices, directions, instructions, or requests, and acknowledge that PTDUE reserves the right (at its sole discretion) to suspend or cancel anyone’s access to any PTDUE Activity and/or Facility, without refund or compensation, for non-compliance with the terms of Sale, signs, notices, directions, instructions, or requests from PTDUE, for unsafe, reckless, or negligent behavior, to ensure safety, security, or order at PTDUE Premises, or if PTDUE deems it necessary under the circumstances.
+I will comply with all HM signs, notices, directions, instructions, or requests, and acknowledge that HM reserves the right (at its sole discretion) to suspend or cancel anyone’s access to any HM Activity and/or Facility, without refund or compensation, for non-compliance with the terms of Sale, signs, notices, directions, instructions, or requests from HM, for unsafe, reckless, or negligent behavior, to ensure safety, security, or order at HM Premises, or if HM deems it necessary under the circumstances.
 
 Each provision of this Waiver and Consent shall be subject to and valid to the extent permitted by law. If any conflict arises with the terms of sale, the relevant provisions of this Waiver and Consent will prevail.
 
@@ -146,4 +163,10 @@ EOD,
     'please_sign_below' => 'Please sign below:',
     'waiver_notice_en_id' => 'This Waiver and Consent is executed in both English and Bahasa Indonesia. In the event of discrepancy, the Bahasa Indonesia version shall prevail.',
     'waiver_confirmation_truth' => 'I certify and confirm that the information I have entered is accurate and true.',
+    'age_caution' => 'You cannot add children who are 18 years old or older.',
+    'waiver_completed' => 'Your waiver has been completed!',
+    'email_waiver_completed_title' => 'Hello, your waiver has been successfully completed!',
+    'email_waiver_completed_message' => 'You are one step closer to <strong>MOVE TO JOY!</strong><br>Thank you for visiting <strong>Hellomonster!</strong>',
+    'email_greeting_closing' => 'Warm regards,<br><br><strong>Hellomonster</strong>',
+    'created_at' => 'Created At'
 ];

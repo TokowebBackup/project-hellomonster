@@ -26,7 +26,9 @@
             }
         };
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Jaro&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -60,14 +62,21 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-white shadow-md px-4 py-6 hidden md:block">
             <div class="mb-8">
-                <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e4.png') ?>" alt="Logo" class="w-32 mx-auto mb-4" />
+                <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e5.png') ?>" alt="Logo" class="w-32 mx-auto mb-4" />
                 <h1 class="text-center font-primary text-xl text-primary">Admin Panel</h1>
             </div>
             <nav class="space-y-2">
                 <a href="<?= base_url('admin/dashboard') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/dashboard') ? 'bg-primary text-white' : 'text-gray-700' ?>">Dashboard</a>
+
                 <a href="<?= base_url('admin/members') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/members') ? 'bg-primary text-white' : 'text-gray-700' ?>">Waiver Members</a>
+
+                <a href="<?= base_url('admin/children') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/waiver/children') ? 'bg-primary text-white' : 'text-gray-700' ?>">Children</a>
+
+                <a href="<?= base_url('admin/sign') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/waiver/sign') ? 'bg-primary text-white' : 'text-gray-700' ?>">Signatures</a>
+
                 <a href="<?= base_url('admin/logout') ?>" class="block py-2 px-4 text-red-600 hover:text-white hover:bg-red-600 rounded">Logout</a>
             </nav>
+
         </aside>
 
         <!-- Main Content -->

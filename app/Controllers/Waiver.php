@@ -9,11 +9,14 @@ class Waiver extends BaseController
 {
     public function index()
     {
-        if (!session()->get('waiver_step_1')) {
-            return redirect()->to('/membership')->with('error', 'Silakan mulai dari awal.');
+        $uuid = $this->request->getGet('id');
+        $isEdit = !empty($uuid);
+
+        if (!$isEdit && !session()->get('waiver_step_1')) {
+            return redirect()->to('/waiver?id=' . $uuid)->with('error', 'Silakan mulai dari awal.');
         }
 
-        $uuid = $this->request->getGet('id');
+
         // if (!$id || !is_numeric($id)) {
         //     return redirect()->to('/membership')->with('error', 'ID tidak valid.');
         // }
@@ -134,8 +137,14 @@ class Waiver extends BaseController
             return redirect()->back()->with('error', 'ID tidak ditemukan.');
         }
 
-        // Generate UUID
-        $uuid = Uuid::uuid4()->toString();
+        $model = new MemberModel();
+        $member = $model->find($id);
+        if (!$member) {
+            return redirect()->back()->with('error', 'Member tidak ditemukan.');
+        }
+
+        // JANGAN BIKIN UUID BARU!!
+        $uuid = $member['uuid'];
 
         $data = [
             'uuid'         => $uuid,
@@ -146,6 +155,7 @@ class Waiver extends BaseController
             'city'         => $this->request->getPost('city'),
             'address'      => $this->request->getPost('address'),
             'agree_terms'  => $this->request->getPost('agree_terms') ? 1 : 0,
+            'created_at'   => date('Y-m-d H:i:s')
         ];
 
         $model = new MemberModel();
@@ -233,7 +243,7 @@ class Waiver extends BaseController
         $model = new \App\Models\ChildrenModel();
         $model->insert($data);
 
-        return redirect()->to('/waiver/children?id=' . $uuid)->with('message', 'Anak berhasil ditambahkan.');
+        return redirect()->to('/waiver/children?id=' . $uuid)->with('message', 'The child has been successfully added.');
     }
 
     public function getChild($id)
@@ -254,7 +264,7 @@ class Waiver extends BaseController
         $child = $model->find($id);
 
         if (!$child) {
-            return redirect()->back()->with('error', 'Data anak tidak ditemukan.');
+            return redirect()->back()->with('error', 'The child\'s data could not be found.');
         }
 
         $rules = [
@@ -293,12 +303,12 @@ class Waiver extends BaseController
         $child = $model->find($id);
 
         if (!$child) {
-            return redirect()->back()->with('error', 'Data anak tidak ditemukan.');
+            return redirect()->back()->with('error', 'The child\s data could not be found.');
         }
 
         $model->delete($id);
 
-        return redirect()->back()->with('message', 'Data anak berhasil dihapus.');
+        return redirect()->back()->with('message', 'The child\'s data has been successfully removed.');
     }
 
     public function sign()
@@ -335,12 +345,14 @@ class Waiver extends BaseController
         if (!$uuid || !$signatureData) {
             return $this->response->setStatusCode(400)->setJSON([
                 'status' => 'error',
-                'message' => 'UUID dan tanda tangan wajib diisi.'
+                'message' => 'Both UUID and signature must be provided.'
             ]);
         }
 
         // Validasi UUID apakah ada di tabel members
-        $member = (new \App\Models\MemberModel())->where('uuid', $uuid)->first();
+        $memberModel = new MemberModel();
+        $member = (new MemberModel())->where('uuid', $uuid)->first();
+
         if (!$member) {
             return $this->response->setStatusCode(404)->setJSON([
                 'status' => 'error',
@@ -349,11 +361,12 @@ class Waiver extends BaseController
         }
 
         // Simpan ke database
-        $signatureModel = new \App\Models\SignatureModel();
+        $signatureModel = new SignatureModel();
         $signatureModel->insert([
             'member_uuid' => $uuid,
             'signature' => $signatureData
         ]);
+        $memberModel->update($member['id'], ['is_active' => 1]);
 
         try {
             $email = \Config\Services::email();
@@ -361,7 +374,7 @@ class Waiver extends BaseController
 
             $email->setFrom($config->fromEmail, $config->fromName ?? 'Hellomonster');
             $email->setTo($member['email']);
-            $email->setSubject('Waiver Kamu Telah Diselesaikan!');
+            $email->setSubject(lang('Membership.waiver_completed'));
 
             $message = view('emails/waiver_success', ['member' => $member]);
             $email->setMessage($message);
@@ -384,11 +397,36 @@ class Waiver extends BaseController
             return redirect()->to('/')->with('error', 'UUID tidak ditemukan.');
         }
 
-
-
         return view('member/waiver/success', [
             'title' => 'Success',
             'version' => env('app.version'),
         ]);
+    }
+
+    public function decline()
+    {
+        $uuid = $this->request->getGet('id');
+
+        if (!$uuid) {
+            return redirect()->to('/')->with('error', 'UUID tidak ditemukan.');
+        }
+
+        $memberModel = new MemberModel();
+        $member = $memberModel->where('uuid', $uuid)->first();
+        $childrenModel = new ChildrenModel();
+        $signatureModel = new SignatureModel();
+
+
+        if ($member) {
+            $memberModel->where('uuid', $uuid)->delete();
+            $childrenModel->where('member_uuid', $uuid)->delete();
+            $signatureModel->where('member_uuid', $uuid)->delete();
+        }
+
+        session()->remove('waiver_step_1');
+        session()->remove('waiver_step_2');
+        session()->remove('waiver_member_id');
+
+        return redirect()->to('/')->with('message', 'Pendaftaran dibatalkan.');
     }
 }

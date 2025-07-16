@@ -31,6 +31,12 @@
             <span class="text-sm text-gray-500"><?= lang('Membership.birthdate') ?></span>
             <span class="text-sm font-medium"><?= date('d M Y', strtotime($member['birthdate'])) ?></span>
         </div>
+        <?php if ($member['is_active']): ?>
+            <div class="flex justify-between created-at-style">
+                <span class="text-sm text-blue-600 font-semibold"><?= lang('Membership.created_at') ?></span>
+                <span class="text-sm font-bold text-blue-800"><?= date('d M Y', strtotime($member['created_at'])) ?></span>
+            </div>
+        <?php endif; ?>
 
         <?php if ($signature): ?>
             <div class="mt-4 mb-6">
@@ -41,7 +47,7 @@
         <?php endif; ?>
     </div>
 
-    <button onclick="location.href='/membership/profile'" class="w-full border border-red-600 text-red-600 rounded py-2 font-medium mb-6">
+    <button onclick="location.href='/waiver?id=<?= esc($uuid) ?>'" class="w-full border border-red-600 text-red-600 rounded py-2 font-medium mb-6">
         <?= lang('Membership.edit') ?>
     </button>
 
@@ -193,6 +199,29 @@
                 text: '<?= lang('Membership.alert_text') ?>',
                 confirmButtonText: 'OK'
             });
+
+            document.getElementById("minorForm").addEventListener("submit", function(e) {
+                const day = parseInt(document.getElementById("birth-day").value);
+                const month = parseInt(document.getElementById("birth-month").value) - 1;
+                const year = parseInt(document.getElementById("birth-year").value);
+
+                if (isNaN(day) || isNaN(month) || isNaN(year)) return;
+
+                const birthDate = new Date(year, month, day);
+                const today = new Date();
+
+                // Hitung tanggal minimum yang diperbolehkan (harus di bawah 18 tahun)
+                const maxDateAllowed = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
+                if (birthDate <= maxDateAllowed) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Tidak Diizinkan',
+                        text: <?= lang('Membership.age_caution') ?>
+                    });
+                }
+            });
         });
     </script>
 <?php endif; ?>
@@ -260,6 +289,5 @@
         return false;
     }
 </script>
-
 
 <?= $this->endSection() ?>

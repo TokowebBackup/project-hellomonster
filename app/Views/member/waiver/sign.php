@@ -49,6 +49,18 @@
     </div>
 </div>
 
+<!-- Fullscreen Loading Overlay -->
+<div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="text-center">
+        <svg class="animate-spin h-10 w-10 text-primary mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+        <p class="text-primary font-medium">Submitting your signature...</p>
+    </div>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <script>
     const canvas = document.getElementById('signature-pad');
@@ -67,7 +79,22 @@
     resizeCanvas();
 
     function clearSignature() {
-        signaturePad.clear();
+        const uuid = '<?= esc($uuid) ?>';
+        document.getElementById('loadingOverlay').classList.remove('hidden');
+        Swal.fire({
+            title: 'Yakin?',
+            text: 'Data akan dihapus dan Anda akan kembali ke halaman awal.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, batalkan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                signaturePad.clear();
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                window.location.href = '/waiver/decline?id=' + uuid;
+            }
+        });
     }
 
     function submitSignature() {
@@ -75,7 +102,7 @@
             Swal.fire('Oops!', 'Please provide your signature.', 'warning');
             return;
         }
-
+        document.getElementById('loadingOverlay').classList.remove('hidden');
         const signatureData = signaturePad.toDataURL();
         const uuid = '<?= esc($uuid) ?>';
         const csrfTokenName = document.getElementById('csrf_token').name;
@@ -101,10 +128,12 @@
                         window.location.href = '/waiver/success?id=<?= esc($uuid) ?>';
                     });
                 } else {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
                     Swal.fire('Error', data.message, 'error');
                 }
             })
             .catch(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
                 Swal.fire('Error', 'Failed to submit signature.', 'error');
             });
     }

@@ -27,6 +27,20 @@ $routes->group('admin', function ($routes) {
 
     $routes->get('dashboard', 'Admin::dashboard');
     $routes->get('members', 'Admin::members');
+    $routes->get('member/edit/(:num)', 'Admin::memberEdit/$1');
+    $routes->post('member/update/(:num)', 'Admin::memberUpdate/$1');
+    $routes->get('member/delete/(:num)', 'Admin::memberDelete/$1');
+
+    // Waiver Children CRUD
+    $routes->get('children', 'Admin::children');
+    $routes->get('children/edit/(:num)', 'Admin::editChild/$1');
+    $routes->post('children/update/(:num)', 'Admin::updateChild/$1');
+    $routes->post('children/delete/(:num)', 'Admin::deleteChild/$1');
+
+    // Waiver Signature CRUD
+    $routes->get('sign', 'Admin::signList');
+    $routes->get('sign/view/(:num)', 'Admin::viewSign/$1');
+    $routes->post('sign/delete/(:num)', 'Admin::deleteSign/$1');
 });
 
 /*
@@ -74,6 +88,7 @@ $routes->group('waiver', function ($routes) {
     // Waiver Sign
     $routes->get('sign', 'Waiver::sign');
     $routes->post('sign/save', 'Waiver::saveSignature');
+    $routes->get('decline', 'Waiver::decline');
     $routes->get('success', 'Waiver::success');
 });
 
@@ -85,6 +100,7 @@ $routes->group('waiver', function ($routes) {
 $routes->group('api', function ($routes) {
     $routes->get('countries', 'Api\CountryApi::index');
     $routes->post('cities', 'Api\CityApi::index');
+    $routes->get('country-code-from-name/(:segment)', 'Api\CountryApi::getCodeFromName/$1');
 });
 
 

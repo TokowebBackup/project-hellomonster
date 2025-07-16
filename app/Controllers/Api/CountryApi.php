@@ -40,4 +40,20 @@ class CountryApi extends ResourceController
             return $this->failServerError('Terjadi kesalahan saat mengambil data negara');
         }
     }
+
+    public function getCountryCodeFromName($countryName)
+    {
+        $url = 'https://restcountries.com/v3.1/name/' . urlencode($countryName);
+        $response = file_get_contents($url);
+        if ($response === false) {
+            return null; // gagal fetch
+        }
+
+        $data = json_decode($response, true);
+        if (isset($data[0]['cca2'])) {
+            return strtolower($data[0]['cca2']); // misal 'ID'
+        }
+
+        return null;
+    }
 }

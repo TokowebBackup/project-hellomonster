@@ -3,7 +3,12 @@
 
 <div class="max-w-xl mx-auto mt-10 bg-white px-4 py-2 sm:px-6 sm:py-8 rounded">
     <h2 class="text-xl font-bold mb-4"><?= lang('Membership.waiver_title') ?></h2>
-
+    <?php
+    $birthdate = isset($member['birthdate']) ? explode('-', $member['birthdate']) : ['', '', ''];
+    $birthYear = $birthdate[0] ?? '';
+    $birthMonth = $birthdate[1] ?? '';
+    $birthDay = $birthdate[2] ?? '';
+    ?>
     <form id="waiverForm" action="/waiver/save" method="post" class="space-y-6">
         <?= csrf_field() ?>
         <!-- Stepper -->
@@ -18,11 +23,11 @@
             <input type="hidden" name="id" value="<?= $member['id'] ?>">
 
             <div class="mb-6">
-                <input type="text" name="name" required placeholder="<?= lang('Membership.full_name') ?>" class="w-full border px-3 py-2 rounded-md">
+                <input type="text" name="name" value="<?= esc($member['name'] ?? '') ?>" required placeholder="<?= lang('Membership.full_name') ?>" class="w-full border px-3 py-2 rounded-md">
             </div>
 
             <div class="mb-6">
-                <input id="phone" name="phone" type="tel" required
+                <input id="phone" name="phone" value="<?= esc($member['phone'] ?? '') ?>" <?= esc($member['phone'] ?? '') ?> type="tel" required
                     class="w-full border px-3 py-2 rounded-md"
                     placeholder="<?= lang('Membership.phone_number') ?>">
             </div>
@@ -30,17 +35,38 @@
 
         <!-- Step 2 -->
         <div id="step2" class="step hidden">
-            <div class="mb-6">
-                <input type="date" name="birthdate" required placeholder="<?= lang('Membership.birthdate') ?>" class="w-full border px-3 py-2 rounded-md">
-            </div>
+            <div class="flex gap-2 mb-6">
+                <input type="hidden" name="birthdate" id="birthdate" value="<?= esc($member['birthdate'] ?? '') ?>">
+                <select name="birth_day" required class="w-1/3 border px-3 py-2 rounded-md">
+                    <option value=""><?= lang('Membership.birth_day') ?></option>
+                    <?php for ($i = 1; $i <= 31; $i++): ?>
+                        <option value="<?= $i ?>" <?= $birthDay == $i ? 'selected' : '' ?>><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
 
-            <div class="mb-6">
-                <select name="country" id="country" required class="w-full border px-3 py-2 rounded-md">
-                    <option value=""><?= lang('Membership.country') ?> (<?= lang('Membership.loading_countries') ?>)</option>
+                <select name="birth_month" required class="w-1/3 border px-3 py-2 rounded-md">
+                    <option value=""><?= lang('Membership.birth_month') ?></option>
+                    <?php foreach (lang('Membership.months') as $num => $name): ?>
+                        <option value="<?= $num ?>" <?= ($birthMonth == $num) ? 'selected' : '' ?>><?= $name ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <select name="birth_year" required class="w-1/3 border px-3 py-2 rounded-md">
+                    <option value=""><?= lang('Membership.birth_year') ?></option>
+                    <?php for ($y = date('Y'); $y >= 1900; $y--): ?>
+                        <option value="<?= $y ?>" <?= ($birthYear == $y) ? 'selected' : '' ?>><?= $y ?></option>
+                    <?php endfor; ?>
                 </select>
             </div>
 
+
             <div class="mb-6">
+                <select name="country" id="country" required class="w-full border px-3 py-2 rounded-md">
+                    <option value="<?= $member['country'] ?>"><?= lang('Membership.country') ?> (<?= lang('Membership.loading_countries') ?>)</option>
+                </select>
+            </div>
+
+            <!-- <div class="mb-6">
                 <select name="city" id="city" required class="select2 w-full border px-3 py-2 rounded-md">
                     <option value=""><?= lang('Membership.select_country_first') ?></option>
                 </select>
@@ -48,11 +74,11 @@
 
             <div>
                 <textarea name="address" rows="3" required placeholder="<?= lang('Membership.address') ?>" class="w-full border px-3 py-2 rounded-md"></textarea>
-            </div>
+            </div> -->
 
             <div class="mb-6">
                 <label class="flex items-start gap-2">
-                    <input type="checkbox" name="agree_terms" required class="mt-1">
+                    <input type="checkbox" name="agree_terms" required class="mt-1" <?= $member['agree_terms'] ? 'checked' : '' ?>>
                     <span class="text-sm text-gray-700">
                         <?= lang('Membership.agree_terms') ?>
                     </span>
@@ -97,13 +123,31 @@
             nationalMode: false,
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
         });
+
         document.getElementById("waiverForm").addEventListener("submit", function(e) {
             if (iti.isValidNumber()) {
                 phoneInput.value = iti.getNumber(); // Format: +628...
             } else {
                 e.preventDefault();
-                alert("<?= lang('Membership.invalid_phone') ?>");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "<?= lang('Membership.invalid_phone') ?>",
+                });
+                return;
             }
+
+            const day = document.querySelector('[name="birth_day"]').value;
+            const month = document.querySelector('[name="birth_month"]').value;
+            const year = document.querySelector('[name="birth_year"]').value;
+
+            if (!day || !month || !year) {
+                e.preventDefault();
+                alert("Tanggal lahir belum lengkap.");
+                return;
+            }
+
+            document.getElementById('birthdate').value = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
         });
     });
 </script>
@@ -126,6 +170,7 @@
     const submitBtn = document.getElementById('submitBtn');
     const countrySelect = document.getElementById('country');
     const citySelect = document.getElementById('city');
+    const selectedCountry = "<?= esc($member['country'] ?? '') ?>";
 
     function showStep(index) {
         steps.forEach((step, i) => {
@@ -168,6 +213,9 @@
                 const opt = document.createElement('option');
                 opt.value = country;
                 opt.textContent = country;
+                if (country === selectedCountry) {
+                    opt.selected = true; // Set selected jika sama dengan data member
+                }
                 countrySelect.appendChild(opt);
             });
         })
