@@ -171,5 +171,6 @@ EOD,
     'created_at' => 'Created At',
     'alert_age_title' => 'Under 18 Years Old',
     'alert_age_desc' => 'Sorry, you do not meet the age requirement to proceed with the form.',
+    'sign_success' => 'Signature has been saved successfully.'
 
 ];

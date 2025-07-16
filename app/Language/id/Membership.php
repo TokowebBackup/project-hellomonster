@@ -169,5 +169,6 @@ EOD,
     'email_greeting_closing' => 'Salam hangat,<br><br><strong>Hellomonster</strong>',
     'created_at' => 'Dibuat Pada',
     'alert_age_title' => 'Usia di bawah 18 tahun',
-    'alert_age_desc' => 'Maaf, Anda belum memenuhi syarat untuk melanjutkan pengisian form.'
+    'alert_age_desc' => 'Maaf, Anda belum memenuhi syarat untuk melanjutkan pengisian form.',
+    'sign_success' => 'Tanda tangan berhasil disimpan.'
 ];
