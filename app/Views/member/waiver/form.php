@@ -61,7 +61,7 @@
 
 
             <div class="mb-6">
-                <select name="country" id="country" required class="w-full border px-3 py-2 rounded-md">
+                <select name="country" id="country" required class="select2 w-full border px-3 py-2 rounded-md">
                     <option value="<?= $member['country'] ?>"><?= lang('Membership.country') ?> (<?= lang('Membership.loading_countries') ?>)</option>
                 </select>
             </div>
@@ -143,7 +143,30 @@
 
             if (!day || !month || !year) {
                 e.preventDefault();
-                alert("Tanggal lahir belum lengkap.");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Tanggal lahir belum lengkap',
+                    text: 'Silakan lengkapi tanggal lahir.',
+                });
+                return;
+            }
+
+            // Hitung usia
+            const birthDate = new Date(`${year}-${month}-${day}`);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: "<?= lang('Membership.alert_age_title') ?>",
+                    text: "<?= lang('Membership.alert_age_desc') ?>",
+                });
                 return;
             }
 
@@ -170,7 +193,7 @@
     const submitBtn = document.getElementById('submitBtn');
     const countrySelect = document.getElementById('country');
     const citySelect = document.getElementById('city');
-    const selectedCountry = "<?= esc($member['country'] ?? '') ?>";
+    const selectedCountry = "<?= esc($member['country'] ?? 'Indonesia') ?>";
 
     function showStep(index) {
         steps.forEach((step, i) => {
@@ -217,6 +240,12 @@
                     opt.selected = true; // Set selected jika sama dengan data member
                 }
                 countrySelect.appendChild(opt);
+            });
+
+            $(countrySelect).select2({
+                placeholder: "Pilih negara...",
+                allowClear: true,
+                width: '100%'
             });
         })
         .catch(err => {

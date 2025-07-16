@@ -167,5 +167,7 @@ EOD,
     'email_waiver_completed_message' => 'Kamu selangkah lagi lebih dekat untuk <strong>MOVE TO JOY!</strong><br>
                 Terima kasih atas kunjunganmu ke <strong>Hellomonster!</strong>',
     'email_greeting_closing' => 'Salam hangat,<br><br><strong>Hellomonster</strong>',
-    'created_at' => 'Dibuat Pada'
+    'created_at' => 'Dibuat Pada',
+    'alert_age_title' => 'Usia di bawah 18 tahun',
+    'alert_age_desc' => 'Maaf, Anda belum memenuhi syarat untuk melanjutkan pengisian form.'
 ];

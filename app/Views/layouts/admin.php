@@ -62,7 +62,7 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-white shadow-md px-4 py-6 hidden md:block">
             <div class="mb-8">
-                <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e5.png') ?>" alt="Logo" class="w-32 mx-auto mb-4" />
+                <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-0003e2.png') ?>" alt="Logo" class="w-32 mx-auto mb-4" />
                 <h1 class="text-center font-primary text-xl text-primary">Admin Panel</h1>
             </div>
             <nav class="space-y-2">

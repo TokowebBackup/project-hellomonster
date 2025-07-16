@@ -76,7 +76,7 @@
             <div class="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div class="font-bold text-lg">
                     <a href="/">
-                        <img src="<?= base_url(); ?>/assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e5.png" alt="hellomonster-logo" class="w-20 sm:w-24 h-auto">
+                        <img src="<?= base_url(); ?>/assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-0003e2.png" alt="hellomonster-logo" class="w-20 sm:w-24 h-auto">
                     </a>
                 </div>
                 <div class="flex items-center gap-2 flex-wrap justify-center sm:justify-end">

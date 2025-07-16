@@ -211,16 +211,16 @@
                 const today = new Date();
 
                 // Hitung tanggal minimum yang diperbolehkan (harus di bawah 18 tahun)
-                const maxDateAllowed = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+                // const maxDateAllowed = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
 
-                if (birthDate <= maxDateAllowed) {
-                    e.preventDefault();
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Tidak Diizinkan',
-                        text: <?= lang('Membership.age_caution') ?>
-                    });
-                }
+                // if (birthDate <= maxDateAllowed) {
+                //     e.preventDefault();
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Tidak Diizinkan',
+                //         text: <?= lang('Membership.age_caution') ?>
+                //     });
+                // }
             });
         });
     </script>

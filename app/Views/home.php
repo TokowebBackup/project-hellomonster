@@ -3,7 +3,7 @@
 
 <div class="w-full max-w-md mx-auto px-4 sm:px-6 space-y-5 text-gray-900 relative z-10 mt-10">
 
-  <p class="font-secondary  text-lg sm:text-2xl leading-snug text-left">
+  <p class="text-lg sm:text-2xl leading-snug text-left">
     <?= lang('Text.enter_email_message') ?>
   </p>
 

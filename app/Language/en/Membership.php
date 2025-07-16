@@ -168,5 +168,8 @@ EOD,
     'email_waiver_completed_title' => 'Hello, your waiver has been successfully completed!',
     'email_waiver_completed_message' => 'You are one step closer to <strong>MOVE TO JOY!</strong><br>Thank you for visiting <strong>Hellomonster!</strong>',
     'email_greeting_closing' => 'Warm regards,<br><br><strong>Hellomonster</strong>',
-    'created_at' => 'Created At'
+    'created_at' => 'Created At',
+    'alert_age_title' => 'Under 18 Years Old',
+    'alert_age_desc' => 'Sorry, you do not meet the age requirement to proceed with the form.',
+
 ];
