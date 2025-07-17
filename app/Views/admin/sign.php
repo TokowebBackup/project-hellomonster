@@ -12,6 +12,10 @@
 <?php endif; ?>
 
 <div class="bg-white shadow rounded-lg overflow-hidden">
+    <div class="mb-4 flex flex-wrap items-center gap-3 p-2 w-full">
+        <input type="text" id="searchInput" placeholder="Search member name..."
+            class="border border-gray-300 rounded px-3 py-2 text-sm w-full sm:w-64" />
+    </div>
     <table class="w-full text-sm text-left text-gray-700">
         <thead class="bg-gray-100 text-xs uppercase">
             <tr>
@@ -63,6 +67,113 @@
         </div>
     </div>
 </div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const tableBody = document.querySelector('tbody');
+
+    searchInput.addEventListener('input', function() {
+        const keyword = this.value;
+
+        fetch(`<?= base_url('admin/sign/search?q=') ?>${encodeURIComponent(keyword)}`)
+            .then(response => response.json())
+            .then(data => {
+                tableBody.innerHTML = '';
+
+                if (data.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">No signatures found.</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                data.forEach(sign => {
+                    const row = document.createElement('tr');
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4">${sign.id}</td>
+                        <td class="px-6 py-4">${sign.member_name ?? 'Unknown'}</td>
+                        <td class="px-6 py-4">${new Date(sign.created_at ?? sign.signed_at).toLocaleString()}</td>
+                        <td class="px-6 py-4 flex gap-2">
+                            <button type="button" class="btn-view border border-blue-600 text-blue-600 rounded px-3 py-1 hover:bg-blue-600 hover:text-white transition flex items-center gap-2" data-id="${sign.id}">
+                                <i class="fa fa-eye"></i> View
+                            </button>
+                            <button type="button" class="btn-delete border border-red-600 text-red-600 rounded px-3 py-1 hover:bg-red-600 hover:text-white transition flex items-center gap-2" data-id="${sign.id}">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+
+                // Rebind event handler untuk view & delete
+                bindSignatureButtons();
+            });
+    });
+
+    function bindSignatureButtons() {
+        document.querySelectorAll('.btn-view').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const url = '<?= base_url('admin/sign/view/') ?>' + id;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            Swal.fire('Error', data.error, 'error');
+                            return;
+                        }
+                        modalMemberName.textContent = data.member_name || 'Unknown';
+                        modalSignedAt.textContent = new Date(data.signed_at || data.created_at).toLocaleString();
+                        modalSignatureImage.src = data.signature;
+
+                        modal.classList.remove('hidden');
+                        modal.classList.add('flex');
+                    });
+            });
+        });
+
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function() {
+                const signId = this.getAttribute('data-id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '<?= base_url('admin/sign/delete/') ?>' + signId;
+
+                        <?php if (function_exists('csrf_token')) : ?>
+                            const csrfInput = document.createElement('input');
+                            csrfInput.type = 'hidden';
+                            csrfInput.name = '<?= csrf_token() ?>';
+                            csrfInput.value = '<?= csrf_hash() ?>';
+                            form.appendChild(csrfInput);
+                        <?php endif; ?>
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            });
+        });
+    }
+
+    // Panggil saat awal load
+    bindSignatureButtons();
+</script>
 
 <script>
     document.querySelectorAll('.btn-delete').forEach(button => {

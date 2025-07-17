@@ -71,19 +71,73 @@ class Admin extends BaseController
             'monthlyCounts' => $monthlyCounts,
         ]);
     }
+
     public function members()
     {
         if (!session()->get('admin_logged_in')) {
             return redirect()->to('/admin/login');
         }
 
-        $memberModel = new \App\Models\MemberModel();
-        $members = $memberModel->findAll();
+        $keyword = $this->request->getGet('keyword');
+        $selectedCountry = $this->request->getGet('country');
+
+        $memberModel = new MemberModel();
+
+        $builder = $memberModel;
+
+        if ($keyword) {
+            $builder = $builder->groupStart()
+                ->like('name', $keyword)
+                ->orLike('email', $keyword)
+                ->orLike('country', $keyword)
+                ->groupEnd();
+        }
+
+        if ($selectedCountry) {
+            $builder = $builder->where('country', $selectedCountry);
+        }
+
+        $members = $builder->findAll();
+
+        // Ambil semua negara unik dari tabel untuk select option
+        $countries = $memberModel->distinct()->select('country')->orderBy('country')->findColumn('country');
+
         foreach ($members as &$m) {
             $m['country_code'] = $this->getCountryCodeFromName($m['country']);
         }
         unset($m);
-        return view('admin/members', ['members' => $members]);
+
+        return view('admin/members', [
+            'members' => $members,
+            'keyword' => $keyword,
+            'selectedCountry' => $selectedCountry,
+            'countries' => $countries
+        ]);
+    }
+
+    public function searchMembers()
+    {
+        $keyword = strtolower($this->request->getGet('q'));
+        $selectedCountry = $this->request->getGet('country');
+
+        $model = new \App\Models\MemberModel();
+        $members = $model->findAll();
+
+        if (!empty($keyword)) {
+            $members = array_filter($members, function ($m) use ($keyword) {
+                return str_contains(strtolower($m['name']), $keyword) ||
+                    str_contains(strtolower($m['email']), $keyword) ||
+                    str_contains(strtolower($m['country']), $keyword);
+            });
+        }
+
+        if (!empty($selectedCountry)) {
+            $members = array_filter($members, function ($m) use ($selectedCountry) {
+                return $m['country'] === $selectedCountry;
+            });
+        }
+
+        return $this->response->setJSON(array_values($members));
     }
 
     public function memberEdit($id)
@@ -145,19 +199,79 @@ class Admin extends BaseController
 
     public function children()
     {
+        $keyword = $this->request->getGet('keyword');
+        $selectedMember = $this->request->getGet('member');
+
         $model = new ChildrenModel();
         $memberModel = new MemberModel();
+
+        // Ambil semua data anak
         $children = $model->findAll();
 
         foreach ($children as &$child) {
             $member = $memberModel->where('uuid', $child['member_uuid'])->first();
-
             $child['member_name'] = $member ? $member['name'] : 'Unknown';
+            $child['member_uuid'] = $member ? $member['uuid'] : null;
             $child['age'] = $this->calculateAge($child['birthdate']);
         }
+        unset($child);
 
-        return view('admin/childrens', compact('children'));
+        // Filter berdasarkan keyword
+        if (!empty($keyword)) {
+            $keyword = strtolower($keyword);
+            $children = array_filter($children, function ($c) use ($keyword) {
+                return str_contains(strtolower($c['name']), $keyword) ||
+                    str_contains(strtolower($c['member_name']), $keyword);
+            });
+        }
+
+        // Filter berdasarkan member UUID
+        if (!empty($selectedMember)) {
+            $children = array_filter($children, function ($c) use ($selectedMember) {
+                return $c['member_uuid'] === $selectedMember;
+            });
+        }
+
+        // Ambil daftar semua member untuk dropdown
+        $memberOptions = $memberModel->select('uuid, name')->orderBy('name')->findAll();
+
+        return view('admin/childrens', [
+            'children' => $children,
+            'keyword' => $keyword,
+            'selectedMember' => $selectedMember,
+            'memberOptions' => $memberOptions
+        ]);
     }
+
+    public function searchChildren()
+    {
+        $keyword = strtolower($this->request->getGet('q'));
+        $model = new ChildrenModel();
+        $memberModel = new MemberModel();
+
+        $children = $model->findAll();
+
+        foreach ($children as &$child) {
+            $member = $memberModel->where('uuid', $child['member_uuid'])->first();
+            $child['member_name'] = $member ? $member['name'] : 'Unknown';
+            $child['member_uuid'] = $member ? $member['uuid'] : null;
+            $child['age'] = $this->calculateAge($child['birthdate']);
+        }
+        unset($child);
+
+        // Filter keyword
+        if (!empty($keyword)) {
+            $children = array_filter($children, function ($c) use ($keyword) {
+                return str_contains(strtolower($c['name']), $keyword) ||
+                    str_contains(strtolower($c['member_name']), $keyword);
+            });
+        }
+
+        // Kembalikan sebagai JSON
+        return $this->response->setJSON(array_values($children)); // reset keys
+    }
+
+
 
     public function createChild()
     {
@@ -230,6 +344,33 @@ class Admin extends BaseController
 
         return view('admin/sign', compact('signs'));
     }
+
+    public function searchSignatures()
+    {
+        $keyword = $this->request->getGet('q');
+
+        $signatureModel = new SignatureModel();
+        $memberModel = new MemberModel();
+
+        $signs = $signatureModel->findAll();
+
+        foreach ($signs as &$sign) {
+            $member = $memberModel->where('uuid', $sign['member_uuid'])->first();
+            $sign['member_name'] = $member ? $member['name'] : 'Unknown';
+        }
+        unset($sign);
+
+        // Filter berdasarkan nama member
+        if (!empty($keyword)) {
+            $keyword = strtolower($keyword);
+            $signs = array_filter($signs, function ($s) use ($keyword) {
+                return str_contains(strtolower($s['member_name']), $keyword);
+            });
+        }
+
+        return $this->response->setJSON(array_values($signs));
+    }
+
 
     public function viewSign($id)
     {

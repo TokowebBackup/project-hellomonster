@@ -15,7 +15,7 @@
       name="email"
       placeholder="<?= lang('Text.placeholder_email') ?>"
       required
-      class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary font-secondary">
+      class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
     <button
       type="submit"
       class="w-full py-2 px-4 bg-primary text-white text-base font-semibold rounded-md hover:bg-blue-700 transition">

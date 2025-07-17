@@ -57,10 +57,10 @@
 <body class="bg-gray-50 min-h-screen">
 
     <!-- Sidebar + Content Layout -->
-    <div class="flex min-h-screen">
+    <div class="flex flex-col md:flex-row min-h-screen w-full">
 
         <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-md px-4 py-6 hidden md:block">
+        <aside id="sidebar" class="w-full md:w-64 bg-white shadow-md px-4 py-6 hidden md:block fixed md:static top-0 left-0 h-full z-50 md:h-auto md:relative">
             <div class="mb-8">
                 <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-0003e2.png') ?>" alt="Logo" class="w-32 mx-auto mb-4" />
                 <h1 class="text-center font-primary text-xl text-primary">Admin Panel</h1>
@@ -80,7 +80,7 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 px-4 sm:px-6 py-6">
+        <main class="flex-1 px-4 sm:px-6 py-6 mt-[64px] md:mt-0">
 
             <header class="mb-6">
                 <h2 class="text-2xl font-semibold text-gray-800"><?= $title ?? 'Dashboard' ?></h2>
@@ -102,7 +102,7 @@
 
     <script>
         document.getElementById("toggleSidebar")?.addEventListener("click", () => {
-            const sidebar = document.querySelector("aside");
+            const sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("hidden");
         });
     </script>
