@@ -83,10 +83,8 @@ class Admin extends BaseController
 
         $memberModel = new MemberModel();
 
-        $builder = $memberModel;
-
         if ($keyword) {
-            $builder = $builder->groupStart()
+            $memberModel = $memberModel->groupStart()
                 ->like('name', $keyword)
                 ->orLike('email', $keyword)
                 ->orLike('country', $keyword)
@@ -94,26 +92,44 @@ class Admin extends BaseController
         }
 
         if ($selectedCountry) {
-            $builder = $builder->where('country', $selectedCountry);
+            $memberModel = $memberModel->where('country', $selectedCountry);
         }
 
-        $members = $builder->findAll();
+        $perPage = 5;
+        $pageParam = 'page_members';  // nama param page kustom
 
-        // Ambil semua negara unik dari tabel untuk select option
-        $countries = $memberModel->distinct()->select('country')->orderBy('country')->findColumn('country');
+        // Ambil halaman dari query param page_members, default 1
+        $page = (int) ($this->request->getGet($pageParam) ?? 1);
+
+        // Panggil paginate dengan pageParam kustom
+        $members = $memberModel->paginate($perPage, 'members', $page);
+        $pager = $memberModel->pager;
+
+        $countries = (new MemberModel())
+            ->distinct()
+            ->select('country')
+            ->orderBy('country')
+            ->findColumn('country');
 
         foreach ($members as &$m) {
             $m['country_code'] = $this->getCountryCodeFromName($m['country']);
         }
         unset($m);
 
+        $query = $this->request->getGet();
+        unset($query[$pageParam]); // hapus supaya gak dobel di URL pagination
+
         return view('admin/members', [
             'members' => $members,
+            'pager' => $pager,
             'keyword' => $keyword,
             'selectedCountry' => $selectedCountry,
-            'countries' => $countries
+            'countries' => $countries,
+            'query' => $query,
+            'pageParam' => $pageParam,
         ]);
     }
+
 
     public function searchMembers()
     {
@@ -201,47 +217,55 @@ class Admin extends BaseController
     {
         $keyword = $this->request->getGet('keyword');
         $selectedMember = $this->request->getGet('member');
+        $pageParam = 'page_children'; // nama parameter page custom, bisa juga 'page'
 
         $model = new ChildrenModel();
         $memberModel = new MemberModel();
 
-        // Ambil semua data anak
-        $children = $model->findAll();
+        // Mulai query builder
+        if ($keyword) {
+            $model = $model->groupStart()
+                ->like('name', $keyword)
+                ->groupEnd();
+        }
 
+        if ($selectedMember) {
+            $model = $model->where('member_uuid', $selectedMember);
+        }
+
+        $perPage = 5;
+        $page = (int) ($this->request->getGet($pageParam) ?? 1);
+
+        // Ambil data dengan paginate
+        $children = $model->paginate($perPage, 'children', $page);
+        $pager = $model->pager;
+
+        // Ambil semua member untuk dropdown
+        $memberOptions = $memberModel->select('uuid, name')->orderBy('name')->findAll();
+
+        // Tambahkan data member_name dan umur per child
         foreach ($children as &$child) {
             $member = $memberModel->where('uuid', $child['member_uuid'])->first();
             $child['member_name'] = $member ? $member['name'] : 'Unknown';
-            $child['member_uuid'] = $member ? $member['uuid'] : null;
             $child['age'] = $this->calculateAge($child['birthdate']);
         }
         unset($child);
 
-        // Filter berdasarkan keyword
-        if (!empty($keyword)) {
-            $keyword = strtolower($keyword);
-            $children = array_filter($children, function ($c) use ($keyword) {
-                return str_contains(strtolower($c['name']), $keyword) ||
-                    str_contains(strtolower($c['member_name']), $keyword);
-            });
-        }
-
-        // Filter berdasarkan member UUID
-        if (!empty($selectedMember)) {
-            $children = array_filter($children, function ($c) use ($selectedMember) {
-                return $c['member_uuid'] === $selectedMember;
-            });
-        }
-
-        // Ambil daftar semua member untuk dropdown
-        $memberOptions = $memberModel->select('uuid, name')->orderBy('name')->findAll();
+        // Kirim semua query kecuali page param ke view untuk dipertahankan di URL pagination
+        $query = $this->request->getGet();
+        unset($query[$pageParam]);
 
         return view('admin/childrens', [
             'children' => $children,
+            'pager' => $pager,
             'keyword' => $keyword,
             'selectedMember' => $selectedMember,
-            'memberOptions' => $memberOptions
+            'memberOptions' => $memberOptions,
+            'query' => $query,
+            'pageParam' => $pageParam,
         ]);
     }
+
 
     public function searchChildren()
     {
@@ -335,14 +359,36 @@ class Admin extends BaseController
         $signatureModel = new SignatureModel();
         $memberModel = new MemberModel();
 
-        $signs = $signatureModel->findAll();
+        $perPage = 5;
+        $pageParam = 'page_signs'; // nama param page kustom
 
+        // Ambil halaman dari query param 'page_signs' atau default 1
+        $page = (int) ($this->request->getGet($pageParam) ?? 1);
+
+        // Buat query builder dengan join member supaya member_name langsung bisa didapat (optional, lebih efisien)
+        // Tapi kalau mau tetap manual seperti ini juga bisa.
+
+        // Pagination tanda tangan
+        $signs = $signatureModel->paginate($perPage, 'signs', $page);
+        $pager = $signatureModel->pager;
+
+        // Tambahkan member_name ke setiap tanda tangan
         foreach ($signs as &$sign) {
             $member = $memberModel->where('uuid', $sign['member_uuid'])->first();
             $sign['member_name'] = $member ? $member['name'] : 'Unknown';
         }
+        unset($sign);
 
-        return view('admin/sign', compact('signs'));
+        // Kirim semua query param kecuali page supaya filter & pagination tetap
+        $query = $this->request->getGet();
+        unset($query[$pageParam]);
+
+        return view('admin/sign', [
+            'signs' => $signs,
+            'pager' => $pager,
+            'query' => $query,
+            'pageParam' => $pageParam,
+        ]);
     }
 
     public function searchSignatures()

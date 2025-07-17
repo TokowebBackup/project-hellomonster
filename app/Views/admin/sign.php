@@ -54,6 +54,11 @@
             <?php endif; ?>
         </tbody>
     </table>
+
+    <div class="px-4 py-3 flex justify-center">
+        <?= $pager->links('signs', 'default_full', ['query' => $query, 'pageParam' => $pageParam]) ?>
+    </div>
+
 </div>
 
 <div id="signatureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">

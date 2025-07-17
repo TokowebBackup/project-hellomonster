@@ -21,6 +21,7 @@
                 class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition">Filter</button>
         </form>
 
+
         <table class="w-full sm:min-w-[640px] text-xs sm:text-sm text-left text-gray-600">
             <thead class="bg-gray-100 text-[10px] sm:text-xs uppercase text-gray-700">
                 <tr>
@@ -62,6 +63,10 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <div class="px-4 py-3 flex justify-center">
+            <?= $pager->links('members', 'default_full', ['query' => $query, 'pageParam' => $pageParam]) ?>
+        </div>
+
     </div>
 </div>
 

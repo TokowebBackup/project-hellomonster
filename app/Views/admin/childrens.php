@@ -58,6 +58,10 @@
             <?php endforeach ?>
         </tbody>
     </table>
+
+    <div class="px-4 py-3 flex justify-center">
+        <?= $pager->links('children', 'default_full', ['query' => $query, 'pageParam' => $pageParam]) ?>
+    </div>
 </div>
 
 <script>
