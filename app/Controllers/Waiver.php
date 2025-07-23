@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\{MemberModel, ChildrenModel, SignatureModel};
+use App\Models\{MemberModel, ChildrenModel, SignatureModel, SettingModel};
 use Ramsey\Uuid\Uuid;
 
 class Waiver extends BaseController
@@ -324,6 +324,8 @@ class Waiver extends BaseController
             return redirect()->to('/')->with('error', 'Member tidak ditemukan.');
         }
 
+        $settingModel = new SettingModel();
+        $content = $settingModel->get('waiver_content');
         // Cek apakah sudah pernah tanda tangan
         $signature = (new SignatureModel())
             ->where('member_uuid', $uuid)
@@ -333,7 +335,7 @@ class Waiver extends BaseController
             return redirect()->to('/waiver/success?id=' . $uuid);
         }
 
-        return view('member/waiver/sign', ['uuid' => $uuid]);
+        return view('member/waiver/sign', ['uuid' => $uuid, 'content' => $content, 'version' => env('app.version')]);
     }
 
 

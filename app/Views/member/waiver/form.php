@@ -102,7 +102,7 @@
             </button>
 
             <!-- Tombol Submit -->
-            <button type="submit" id="submitBtn" class="hidden text-white bg-blue-600 px-4 py-2 rounded flex items-center gap-1 w-full sm:w-auto">
+            <button type="submit" id="submitBtn" disabled class="text-white bg-blue-600 px-4 py-2 rounded flex items-center gap-1 w-full sm:w-auto">
                 <i data-feather="check-circle" class="w-4 h-4"></i>
                 <?= lang('Membership.submit') ?>
             </button>
@@ -112,6 +112,21 @@
 </div>
 
 
+<script>
+    const agreeCheckbox = document.querySelector('input[name="agree_terms"]');
+
+    function toggleSubmitButton() {
+        if (agreeCheckbox.checked && currentStep === steps.length - 1) {
+            submitBtn.disabled = false;
+        } else {
+            submitBtn.disabled = true;
+        }
+    }
+
+    agreeCheckbox.addEventListener('change', toggleSubmitButton);
+    nextBtn.addEventListener('click', toggleSubmitButton);
+    prevBtn.addEventListener('click', toggleSubmitButton);
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

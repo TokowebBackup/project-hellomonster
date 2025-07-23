@@ -44,6 +44,13 @@ $routes->group('admin', function ($routes) {
     $routes->get('sign/view/(:num)', 'Admin::viewSign/$1');
     $routes->post('sign/delete/(:num)', 'Admin::deleteSign/$1');
     $routes->get('sign/search', 'Admin::searchSignatures');
+
+    // Settings
+    $routes->get('settings', 'Admin::settings');
+    $routes->get('settings/add', 'Admin::addSetting');
+    $routes->post('settings/save', 'Admin::saveSetting');
+    $routes->get('settings/edit/(:num)', 'Admin::editSetting/$1');
+    $routes->post('settings/update/(:num)', 'Admin::updateSetting/$1');
 });
 
 /*

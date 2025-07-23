@@ -3,12 +3,12 @@
 
 <div class="max-w-2xl mx-auto p-6 rounded">
     <div style="height: 50vh; overflow: auto;" class="text-left">
-        <h2 class="text-xl font-bold mb-4 text-left"><?= lang('Membership.header_exclusion') ?></h2>
-        <h6 class="text-xl font-normal mb-4 text-left"><?= lang('Membership.exclusion_title') ?></h6>
+        <!-- <h2 class="text-xl font-bold mb-4 text-left"><?= lang('Membership.header_exclusion') ?></h2>
+        <h6 class="text-xl font-normal mb-4 text-left"><?= lang('Membership.exclusion_title') ?></h6> -->
 
         <!-- Scrollable Box untuk Waiver Panjang -->
         <div class="text-sm text-gray-800 leading-relaxed mb-6 space-y-3">
-            <?= nl2br(lang('Membership.exclusion_notice')) ?>
+            <?= nl2br($content) ?>
         </div>
 
         <p class="text-sm text-gray-700 mb-4"><?= lang('Membership.please_sign_below') ?></p>

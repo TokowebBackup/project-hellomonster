@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\{AdminModel, MemberModel, SignatureModel, ChildrenModel};
+use App\Models\{AdminModel, MemberModel, SignatureModel, ChildrenModel, SettingModel};
 
 class Admin extends BaseController
 {
@@ -95,7 +95,7 @@ class Admin extends BaseController
             $memberModel = $memberModel->where('country', $selectedCountry);
         }
 
-        $perPage = 5;
+        $perPage = 20;
         $pageParam = 'page_members';  // nama param page kustom
 
         // Ambil halaman dari query param page_members, default 1
@@ -110,6 +110,8 @@ class Admin extends BaseController
             ->select('country')
             ->orderBy('country')
             ->findColumn('country');
+
+        $countries = array_filter($countries, fn($c) => !empty(trim($c)));
 
         foreach ($members as &$m) {
             $m['country_code'] = $this->getCountryCodeFromName($m['country']);
@@ -233,7 +235,7 @@ class Admin extends BaseController
             $model = $model->where('member_uuid', $selectedMember);
         }
 
-        $perPage = 5;
+        $perPage = 20;
         $page = (int) ($this->request->getGet($pageParam) ?? 1);
 
         // Ambil data dengan paginate
@@ -359,7 +361,7 @@ class Admin extends BaseController
         $signatureModel = new SignatureModel();
         $memberModel = new MemberModel();
 
-        $perPage = 5;
+        $perPage = 20;
         $pageParam = 'page_signs'; // nama param page kustom
 
         // Ambil halaman dari query param 'page_signs' atau default 1
@@ -440,5 +442,94 @@ class Admin extends BaseController
         $model = new SignatureModel();
         $model->delete($id);
         return redirect()->to('/admin/sign')->with('message', 'Signature deleted.');
+    }
+
+
+
+    public function settings()
+    {
+        if (!session()->get('admin_logged_in')) {
+            return redirect()->to('/admin/login');
+        }
+
+        $model = new SettingModel();
+        $data['settings'] = $model->orderBy('key_name', 'asc')->findAll();
+
+        return view('admin/settings', $data);
+    }
+
+    public function addSetting()
+    {
+        if (!session()->get('admin_logged_in')) {
+            return redirect()->to('/admin/login');
+        }
+
+        return view('admin/settings/add', ['setting' => ['id' => '', 'key_name' => '', 'content' => '']]);
+    }
+
+    public function saveSetting()
+    {
+        if (!session()->get('admin_logged_in')) {
+            return redirect()->to('/admin/login');
+        }
+
+        $key = $this->request->getPost('key_name');
+        $content = $this->request->getPost('content');
+
+        if (!$key || !$content) {
+            return redirect()->back()->with('error', 'Key dan Content wajib diisi.');
+        }
+
+        $model = new SettingModel();
+
+        // Cek duplikat key
+        if ($model->where('key_name', $key)->first()) {
+            return redirect()->back()->with('error', 'Key sudah digunakan.');
+        }
+
+        $model->insert([
+            'key_name' => $key,
+            'content' => $content
+        ]);
+
+        return redirect()->to('/admin/settings')->with('message', 'Setting berhasil ditambahkan.');
+    }
+
+
+
+    public function editSetting($id)
+    {
+        if (!session()->get('admin_logged_in')) {
+            return redirect()->to('/admin/login');
+        }
+
+        $model = new SettingModel();
+        $setting = $model->find($id);
+
+        if (!$setting) {
+            return redirect()->to('/admin/settings')->with('error', 'Setting tidak ditemukan.');
+        }
+
+        return view('admin/settings/add', ['setting' => $setting]);
+    }
+
+    public function updateSetting($id)
+    {
+        if (!session()->get('admin_logged_in')) {
+            return redirect()->to('/admin/login');
+        }
+
+        $model = new SettingModel();
+        $setting = $model->find($id);
+
+        if (!$setting) {
+            return redirect()->to('/admin/settings')->with('error', 'Setting tidak ditemukan.');
+        }
+
+        $content = $this->request->getPost('content');
+
+        $model->update($id, ['content' => $content]);
+
+        return redirect()->to('/admin/settings')->with('message', 'Setting berhasil diperbarui.');
     }
 }

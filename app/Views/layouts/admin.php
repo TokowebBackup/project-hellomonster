@@ -74,6 +74,9 @@
 
                 <a href="<?= base_url('admin/sign') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/waiver/sign') ? 'bg-primary text-white' : 'text-gray-700' ?>">Signatures</a>
 
+                <a href="<?= base_url('admin/settings') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/waiver/sign') ? 'bg-primary text-white' : 'text-gray-700' ?>">Settings</a>
+
+
                 <a href="<?= base_url('admin/logout') ?>" class="block py-2 px-4 text-red-600 hover:text-white hover:bg-red-600 rounded">Logout</a>
             </nav>
 
@@ -99,6 +102,19 @@
             </section>
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#editor',
+            height: 300,
+            menubar: false,
+            plugins: 'lists link image preview code',
+            toolbar: 'undo redo | bold italic underline | bullist numlist | link image | preview code',
+            branding: false
+        });
+    </script>
+
 
     <script>
         document.getElementById("toggleSidebar")?.addEventListener("click", () => {
