@@ -131,7 +131,7 @@
 
         <!-- Logo + Version -->
         <div class="text-sm text-gray-400 mb-1">v<?= env('app.version') ?></div>
-        <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-0003e2.png') ?>" alt="Logo" class="w-[60%]" />
+        <img src="<?= esc($logo_src) ?>" alt="Logo" class="w-[60%]" />
     </div>
 
     <!-- Content -->

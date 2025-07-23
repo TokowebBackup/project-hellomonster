@@ -51,6 +51,7 @@ $routes->group('admin', function ($routes) {
     $routes->post('settings/save', 'Admin::saveSetting');
     $routes->get('settings/edit/(:num)', 'Admin::editSetting/$1');
     $routes->post('settings/update/(:num)', 'Admin::updateSetting/$1');
+    $routes->post('settings/upload-image', 'Admin::uploadImage');
 });
 
 /*

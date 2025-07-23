@@ -7,6 +7,11 @@ use Ramsey\Uuid\Uuid;
 
 class Waiver extends BaseController
 {
+    public function __construct()
+    {
+        helper('settings');
+    }
+
     public function index()
     {
         $uuid = $this->request->getGet('id');
@@ -195,6 +200,9 @@ class Waiver extends BaseController
         $children = $childrenModel->where('member_uuid', $uuid)->findAll();
         $signatureModel = new SignatureModel();
         $signature = $signatureModel->where('member_uuid', $uuid)->orderBy('signed_at', 'desc')->first();
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
 
         return view('member/waiver/children', [
             'member'    => $member,
@@ -202,6 +210,7 @@ class Waiver extends BaseController
             'uuid'      => $uuid,
             'signature' => $signature,
             'version'   => env('app.version'),
+            'logo_src'  => $logo_src
         ]);
     }
 
@@ -325,7 +334,13 @@ class Waiver extends BaseController
         }
 
         $settingModel = new SettingModel();
-        $content = $settingModel->get('waiver_content');
+        $locale = service('request')->getLocale(); // otomatis berdasarkan session, URL, dst
+        $key = 'waiver_content_' . $locale;
+
+        $content = $settingModel->get($key);
+
+        // var_dump($content);
+        // die;
         // Cek apakah sudah pernah tanda tangan
         $signature = (new SignatureModel())
             ->where('member_uuid', $uuid)
@@ -335,7 +350,11 @@ class Waiver extends BaseController
             return redirect()->to('/waiver/success?id=' . $uuid);
         }
 
-        return view('member/waiver/sign', ['uuid' => $uuid, 'content' => $content, 'version' => env('app.version')]);
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
+        return view('member/waiver/sign', ['uuid' => $uuid, 'content' => $content, 'version' => env('app.version'), 'logo_src' => $logo_src]);
     }
 
 

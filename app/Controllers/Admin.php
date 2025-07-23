@@ -6,9 +6,20 @@ use App\Models\{AdminModel, MemberModel, SignatureModel, ChildrenModel, SettingM
 
 class Admin extends BaseController
 {
+    public function __construct()
+    {
+        helper('settings');
+    }
+
     public function login()
     {
-        return view('admin/login');
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+        $data = [
+            'logo_src' => $logo_src,
+        ];
+        return view('admin/login', $data);
     }
 
     public function doLogin()
@@ -62,13 +73,19 @@ class Admin extends BaseController
         $result = $builder->get()->getResult();
 
         $monthlyCounts = array_fill(1, 12, 0);
+
         foreach ($result as $row) {
             $monthlyCounts[(int)$row->month] = (int)$row->count;
         }
 
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
         return view('admin/dashboard', [
             'totalMembers' => $totalMembers,
             'monthlyCounts' => $monthlyCounts,
+            'logo_src' => $logo_src,
         ]);
     }
 
@@ -121,6 +138,10 @@ class Admin extends BaseController
         $query = $this->request->getGet();
         unset($query[$pageParam]); // hapus supaya gak dobel di URL pagination
 
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
         return view('admin/members', [
             'members' => $members,
             'pager' => $pager,
@@ -129,6 +150,7 @@ class Admin extends BaseController
             'countries' => $countries,
             'query' => $query,
             'pageParam' => $pageParam,
+            'logo_src' => $logo_src,
         ]);
     }
 
@@ -171,7 +193,11 @@ class Admin extends BaseController
             return redirect()->to('/admin/members')->with('error', 'Member tidak ditemukan.');
         }
 
-        return view('admin/member/edit', ['member' => $member]);
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
+        return view('admin/member/edit', ['member' => $member, 'logo_src' => $logo_src]);
     }
 
     public function memberUpdate($id)
@@ -257,6 +283,10 @@ class Admin extends BaseController
         $query = $this->request->getGet();
         unset($query[$pageParam]);
 
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
         return view('admin/childrens', [
             'children' => $children,
             'pager' => $pager,
@@ -265,6 +295,7 @@ class Admin extends BaseController
             'memberOptions' => $memberOptions,
             'query' => $query,
             'pageParam' => $pageParam,
+            'logo_src' => $logo_src,
         ]);
     }
 
@@ -328,8 +359,10 @@ class Admin extends BaseController
 
         // Ambil list member untuk dropdown (id = uuid, value = name)
         $members = $memberModel->findAll();
-
-        return view('admin/children/edit', compact('child', 'members'));
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+        return view('admin/children/edit', compact('child', 'members', 'logo_src'));
     }
 
     public function updateChild($id)
@@ -385,11 +418,16 @@ class Admin extends BaseController
         $query = $this->request->getGet();
         unset($query[$pageParam]);
 
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
         return view('admin/sign', [
             'signs' => $signs,
             'pager' => $pager,
             'query' => $query,
             'pageParam' => $pageParam,
+            'logo_src' => $logo_src,
         ]);
     }
 
@@ -453,6 +491,10 @@ class Admin extends BaseController
         }
 
         $model = new SettingModel();
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+        $data['logo_src'] = $logo_src;
         $data['settings'] = $model->orderBy('key_name', 'asc')->findAll();
 
         return view('admin/settings', $data);
@@ -464,7 +506,10 @@ class Admin extends BaseController
             return redirect()->to('/admin/login');
         }
 
-        return view('admin/settings/add', ['setting' => ['id' => '', 'key_name' => '', 'content' => '']]);
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+        return view('admin/settings/add', ['setting' => ['id' => '', 'key_name' => '', 'content' => ''], 'logo_src' => $logo_src]);
     }
 
     public function saveSetting()
@@ -475,6 +520,23 @@ class Admin extends BaseController
 
         $key = $this->request->getPost('key_name');
         $content = $this->request->getPost('content');
+
+        // $imagePath = null;
+        // $image = $this->request->getFile('image');
+        // if ($image && $image->isValid() && !$image->hasMoved()) {
+        //     $imageName = $image->getRandomName();
+        //     $uploadPath = FCPATH . 'uploads/settings/';
+        //     if (!is_dir($uploadPath)) {
+        //         mkdir($uploadPath, 0755, true); // buat folder rekursif
+        //     }
+        //     $image->move('uploads/settings', $imageName);
+        //     $imagePath = base_url('uploads/settings/' . $imageName);
+        // }
+
+        // // Gabungkan dengan konten
+        // if ($imagePath) {
+        //     $content .= '<br><img src="' . $imagePath . '" alt="Image" />';
+        // }
 
         if (!$key || !$content) {
             return redirect()->back()->with('error', 'Key dan Content wajib diisi.');
@@ -495,6 +557,29 @@ class Admin extends BaseController
         return redirect()->to('/admin/settings')->with('message', 'Setting berhasil ditambahkan.');
     }
 
+    public function uploadImage()
+    {
+        if (!session()->get('admin_logged_in')) {
+            return $this->response->setJSON(['error' => 'Unauthorized']);
+        }
+
+        $image = $this->request->getFile('image');
+
+        if (!$image || !$image->isValid() || $image->hasMoved()) {
+            return $this->response->setJSON(['error' => 'Gambar tidak valid.']);
+        }
+
+        $imageName = $image->getRandomName();
+        $uploadPath = FCPATH . 'uploads/settings/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
+
+        $image->move($uploadPath, $imageName);
+        $imageUrl = base_url('uploads/settings/' . $imageName);
+
+        return $this->response->setJSON(['location' => $imageUrl]);
+    }
 
 
     public function editSetting($id)
@@ -510,7 +595,11 @@ class Admin extends BaseController
             return redirect()->to('/admin/settings')->with('error', 'Setting tidak ditemukan.');
         }
 
-        return view('admin/settings/add', ['setting' => $setting]);
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
+        return view('admin/settings/add', ['setting' => $setting, 'logo_src' => $logo_src]);
     }
 
     public function updateSetting($id)
@@ -526,9 +615,10 @@ class Admin extends BaseController
             return redirect()->to('/admin/settings')->with('error', 'Setting tidak ditemukan.');
         }
 
+        $key = $this->request->getPost('key_name');
         $content = $this->request->getPost('content');
 
-        $model->update($id, ['content' => $content]);
+        $model->update($id, ['key_name' => $key, 'content' => $content]);
 
         return redirect()->to('/admin/settings')->with('message', 'Setting berhasil diperbarui.');
     }

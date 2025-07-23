@@ -26,6 +26,7 @@
             }
         };
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -62,7 +63,9 @@
         <!-- Sidebar -->
         <aside id="sidebar" class="w-full md:w-64 bg-white shadow-md px-4 py-6 hidden md:block fixed md:static top-0 left-0 h-full z-50 md:h-auto md:relative">
             <div class="mb-8">
-                <img src="<?= base_url('assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-0003e2.png') ?>" alt="Logo" class="w-32 mx-auto mb-4" />
+                <?php if (!empty($logo_src)) : ?>
+                    <img src="<?= esc($logo_src) ?>" alt="Logo" class="w-32 mx-auto mb-4" />
+                <?php endif; ?>
                 <h1 class="text-center font-primary text-xl text-primary">Admin Panel</h1>
             </div>
             <nav class="space-y-2">
@@ -102,19 +105,6 @@
             </section>
         </main>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.3/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: '#editor',
-            height: 300,
-            menubar: false,
-            plugins: 'lists link image preview code',
-            toolbar: 'undo redo | bold italic underline | bullist numlist | link image | preview code',
-            branding: false
-        });
-    </script>
-
 
     <script>
         document.getElementById("toggleSidebar")?.addEventListener("click", () => {
