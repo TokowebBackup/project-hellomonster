@@ -47,7 +47,7 @@
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <div class="flex justify-center p-4">
             <?php if (!empty($logo_src)) : ?>
-                <img src="<?= base_url() ?>/assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-0003e2.png" alt="hellomonster-logo" class="w-36 h-auto" />
+                <img src="<?= esc($logo_src) ?>" alt="hellomonster-logo" class="w-36 h-auto" />
             <?php endif; ?>
         </div>
         <h1 class=" text-2xl font-semibold text-center text-primary mb-4 font-primary">Admin Login</h1>
