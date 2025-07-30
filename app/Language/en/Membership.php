@@ -171,6 +171,12 @@ EOD,
     'created_at' => 'Created At',
     'alert_age_title' => 'Under 18 Years Old',
     'alert_age_desc' => 'Sorry, you do not meet the age requirement to proceed with the form.',
-    'sign_success' => 'Signature has been saved successfully.'
-
+    'sign_success' => 'Signature has been saved successfully.',
+    'placehoder_date' => 'Date',
+    'placehoder_month' => 'Select Month',
+    'placehoder_day' => 'Day',
+    'placehoder_year' => 'Year',
+    'loading' => 'Processing...',
+    'notif_new_member_title' => 'New Member',
+    'notif_new_member_message' => 'A new member named {name} has successfully signed the waiver.',
 ];

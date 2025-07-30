@@ -119,7 +119,7 @@ class Admin extends BaseController
         $page = (int) ($this->request->getGet($pageParam) ?? 1);
 
         // Panggil paginate dengan pageParam kustom
-        $members = $memberModel->paginate($perPage, 'members', $page);
+        $members = $memberModel->orderBy('id', 'DESC')->paginate($perPage, 'members', $page);
         $pager = $memberModel->pager;
 
         $countries = (new MemberModel())
@@ -265,7 +265,7 @@ class Admin extends BaseController
         $page = (int) ($this->request->getGet($pageParam) ?? 1);
 
         // Ambil data dengan paginate
-        $children = $model->paginate($perPage, 'children', $page);
+        $children = $model->orderBy('id', 'DESC')->paginate($perPage, 'children', $page);
         $pager = $model->pager;
 
         // Ambil semua member untuk dropdown
@@ -404,7 +404,7 @@ class Admin extends BaseController
         // Tapi kalau mau tetap manual seperti ini juga bisa.
 
         // Pagination tanda tangan
-        $signs = $signatureModel->paginate($perPage, 'signs', $page);
+        $signs = $signatureModel->orderBy('id', 'DESC')->paginate($perPage, 'signs', $page);
         $pager = $signatureModel->pager;
 
         // Tambahkan member_name ke setiap tanda tangan
@@ -621,5 +621,38 @@ class Admin extends BaseController
         $model->update($id, ['key_name' => $key, 'content' => $content]);
 
         return redirect()->to('/admin/settings')->with('message', 'Setting berhasil diperbarui.');
+    }
+
+    public function latestMember()
+    {
+        $memberModel = new \App\Models\MemberModel();
+        $latest = $memberModel->orderBy('created_at', 'DESC')->first();
+
+        return $this->response->setJSON([
+            'id' => $latest['id'],
+            'name' => $latest['name'],
+            'email' => $latest['email'],
+            'created_at' => $latest['created_at'],
+        ]);
+    }
+
+    public function notifications()
+    {
+        $notifModel = new \App\Models\NotificationModel();
+        // $notifs = $notifModel->orderBy('created_at', 'DESC')->findAll(10); // Ambil 10 terakhir
+        $notifs = $notifModel->where('is_read', 0)->orderBy('created_at', 'DESC')->findAll(10);
+
+
+        return $this->response->setJSON($notifs);
+    }
+
+    public function markNotificationRead()
+    {
+        $id = $this->request->getPost('id');
+        $notifModel = new \App\Models\NotificationModel();
+
+        $notifModel->update($id, ['is_read' => 1]);
+
+        return $this->response->setJSON(['status' => 'ok']);
     }
 }

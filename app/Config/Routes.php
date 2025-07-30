@@ -12,7 +12,8 @@ use CodeIgniter\Router\Routes;
 |--------------------------------------------------------------------------
 */
 
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::homeIndex');
+$routes->get('/waiver', 'Home::waiverIndex');
 $routes->post('language', 'Language::switch');
 
 /*
@@ -25,6 +26,11 @@ $routes->group('admin', function ($routes) {
     $routes->post('login', 'Admin::doLogin');
     $routes->get('logout', 'Admin::logout');
 
+    // Notification
+    $routes->get('notifications', 'Admin::notifications');
+    $routes->post('notifications/mark-read', 'Admin::markNotificationRead');
+
+    // Dashboard
     $routes->get('dashboard', 'Admin::dashboard');
     $routes->get('members', 'Admin::members');
     $routes->get('member/edit/(:num)', 'Admin::memberEdit/$1');

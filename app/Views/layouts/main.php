@@ -113,6 +113,31 @@
             right: 0.5rem;
         }
 
+        .select2-container .select2-selection--single {
+            height: 42px !important;
+            /* sesuaikan dengan input kamu */
+            padding: 6px 12px !important;
+            display: flex;
+            align-items: center;
+            border: 1px solid #d1d5db;
+            /* warna border Tailwind gray-300 */
+            border-radius: 0.375rem;
+            /* rounded-md */
+        }
+
+        /* Atur posisi icon dropdown agar center */
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 50% !important;
+            transform: translateY(-50%);
+        }
+
+        /* Biar font sama */
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            font-size: 0.875rem;
+            /* Tailwind text-sm */
+            line-height: 1.25rem;
+        }
+
         .created-at-style {
             background-color: #eef6ff;
             /* background biru muda misal */
@@ -171,6 +196,11 @@
 
     <script>
         $(document).ready(function() {
+            $('.select2-custom').select2({
+                placeholder: "<?= lang('Membership.placehoder_month') ?>",
+                allowClear: true,
+                width: 'resolve'
+            });
             $('#city').select2({
                 placeholder: 'Ketik nama kota atau kabupaten',
                 width: '100%'
@@ -180,6 +210,72 @@
             feather.replace();
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            const currentPath = window.location.pathname;
+            const currentQuery = window.location.search;
+
+            // Jalankan hanya jika path = "/waiver" dan ada query "id="
+            if (currentPath === "/waiver" && currentQuery.includes("id=")) {
+
+                // Inisialisasi Select2
+                $('#birth_month_wiver').select2({
+                    placeholder: "<?= lang('Membership.placehoder_month') ?>...",
+                    allowClear: true,
+                    width: '100%'
+                });
+
+
+                // Variabel step
+                let currentStep = 0;
+                const steps = document.querySelectorAll(".step");
+                const nextBtn = document.getElementById("nextBtn");
+
+                function showStep(step) {
+                    steps.forEach((s, i) => {
+                        s.classList.toggle("hidden", i !== step);
+                    });
+                }
+
+                function autoOpenSelect2IfNeeded() {
+                    if (currentStep === 1) {
+                        setTimeout(() => {
+                            const $select = $('#birth_month');
+                            const select2Container = $select.next('.select2');
+
+                            if (select2Container.is(':visible')) {
+                                $select.select2('open');
+                            } else {
+                                setTimeout(() => {
+                                    if ($select.next('.select2').is(':visible')) {
+                                        $select.select2('open');
+                                    }
+                                }, 300);
+                            }
+                        }, 300);
+                    }
+                }
+
+                if (nextBtn) {
+                    nextBtn.addEventListener("click", () => {
+                        if (currentStep < steps.length - 1) {
+                            currentStep++;
+                            showStep(currentStep);
+                            console.log('Step saat ini:', currentStep);
+                            autoOpenSelect2IfNeeded();
+                        }
+                    });
+                }
+
+                if (currentStep === 1) {
+                    autoOpenSelect2IfNeeded();
+                }
+
+                showStep(currentStep);
+            }
+        });
+    </script>
+
 </body>
 
 </html>

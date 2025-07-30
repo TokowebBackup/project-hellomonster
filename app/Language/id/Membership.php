@@ -170,5 +170,12 @@ EOD,
     'created_at' => 'Dibuat Pada',
     'alert_age_title' => 'Usia di bawah 18 tahun',
     'alert_age_desc' => 'Maaf, Anda belum memenuhi syarat untuk melanjutkan pengisian form.',
-    'sign_success' => 'Tanda tangan berhasil disimpan.'
+    'sign_success' => 'Tanda tangan berhasil disimpan.',
+    'placehoder_date' => 'Tanggal',
+    'placehoder_month' => 'Pilih Bulan',
+    'placehoder_day' => 'Hari',
+    'placehoder_year' => 'Tahun',
+    'loading' => 'Memproses',
+    'notif_new_member_title' => 'Member Baru',
+    'notif_new_member_message' => 'Member baru dengan nama {name} telah berhasil menandatangani waiver.',
 ];

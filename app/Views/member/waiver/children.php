@@ -110,12 +110,17 @@
     </div>
 
     <!-- Tombol Next -->
-    <form action="/waiver/sign" method="get">
+    <form id="nextForm" action="/waiver/sign" method="get">
         <input type="hidden" name="id" value="<?= esc($uuid) ?>">
-        <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded">
-            <?= lang('Membership.next') ?>
+        <button type="submit" id="nextBtn" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded flex items-center justify-center gap-2">
+            <span class="btn-text"><?= lang('Membership.next') ?></span>
+            <svg class="btn-spinner hidden w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
         </button>
     </form>
+
 </div>
 
 <?= $this->section('modals') ?>
@@ -144,7 +149,7 @@
 
             <div>
                 <label class="block text-sm mb-1"><?= lang('Membership.birth_date') ?></label>
-                <div class="flex gap-2">
+                <!-- <div class="flex gap-2">
                     <select name="birth_month" id="birth-month" class="w-1/3 border px-2 py-1 rounded" required>
                         <option value=""><?= lang('Membership.birth_month') ?></option>
                         <?php for ($m = 1; $m <= 12; $m++): ?>
@@ -163,7 +168,31 @@
                             <option value="<?= $y ?>"><?= $y ?></option>
                         <?php endfor ?>
                     </select>
+                </div> -->
+                <div class="mb-4 flex gap-2">
+                    <!-- Hari -->
+                    <input type="number" name="birth_day" id="birth_day" min="1" max="31"
+                        value="<?= esc($child['birth_day'] ?? '') ?>" placeholder="<?= lang('Membership.placehoder_day') ?>"
+                        required class="w-[35%] border px-3 py-2 rounded-md" />
+
+                    <!-- Bulan -->
+                    <select name="birth_month" id="birth_month_children" required
+                        class="select2-custom w-[20%] border px-3 py-2 rounded-md">
+                        <option value=""><?= lang('Membership.placehoder_month') ?></option>
+                        <?php foreach (lang('Membership.months') as $num => $name): ?>
+                            <option value="<?= $num ?>" <?= (isset($child['birth_month']) && $child['birth_month'] == $num) ? 'selected' : '' ?>>
+                                <?= $name ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <!-- Tahun -->
+                    <input type="number" name="birth_year" id="birth_year"
+                        value="<?= esc($child['birth_year'] ?? '') ?>" placeholder="<?= lang('Membership.placehoder_year') ?>"
+                        min="1900" max="<?= date('Y') ?>"
+                        required class="w-[55%] border px-3 py-2 rounded-md" />
                 </div>
+                <input type="hidden" name="birthdate" id="birthdate" />
             </div>
 
             <div>
@@ -183,13 +212,36 @@
 
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-100 text-gray-800 rounded"><?= lang('Membership.cancel') ?></button>
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded"><?= lang('Membership.save') ?></button>
+                <button type="submit" id="submitMinorBtn" class="px-4 py-2 bg-blue-600 text-white rounded flex items-center justify-center gap-2">
+                    <span class="btn-text"><?= lang('Membership.save') ?></span>
+                    <svg class="btn-spinner hidden w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                </button>
+
             </div>
         </form>
     </div>
 </div>
 <?= $this->endSection() ?>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const nextForm = document.getElementById("nextForm");
+        if (nextForm) {
+            nextForm.addEventListener("submit", function() {
+                const nextBtn = document.getElementById("nextBtn");
+                const nextBtnText = nextBtn.querySelector('.btn-text');
+                const nextBtnSpinner = nextBtn.querySelector('.btn-spinner');
+
+                nextBtn.disabled = true;
+                nextBtnText.textContent = <?= lang('Membership.loading') ?>;
+                nextBtnSpinner.classList.remove("hidden");
+            });
+        }
+    });
+</script>
 <?php if (empty($children)): ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -199,28 +251,26 @@
                 text: '<?= lang('Membership.alert_text') ?>',
                 confirmButtonText: 'OK'
             });
+            const form = document.getElementById("minorForm");
+            const submitBtn = document.getElementById("submitMinorBtn"); // <<< fix disini
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnSpinner = submitBtn.querySelector('.btn-spinner');
 
-            document.getElementById("minorForm").addEventListener("submit", function(e) {
-                const day = parseInt(document.getElementById("birth-day").value);
-                const month = parseInt(document.getElementById("birth-month").value) - 1;
-                const year = parseInt(document.getElementById("birth-year").value);
+            form.addEventListener("submit", function(e) {
+                const day = document.getElementById("birth_day").value;
+                const month = document.getElementById("birth_month_children").value;
+                const year = document.getElementById("birth_year").value;
 
-                if (isNaN(day) || isNaN(month) || isNaN(year)) return;
+                if (!day || !month || !year) return; // biarkan HTML5 validation bekerja
 
-                const birthDate = new Date(year, month, day);
-                const today = new Date();
+                // Format tanggal menjadi YYYY-MM-DD
+                const formatted = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                document.getElementById("birthdate").value = formatted;
 
-                // Hitung tanggal minimum yang diperbolehkan (harus di bawah 18 tahun)
-                // const maxDateAllowed = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-
-                // if (birthDate <= maxDateAllowed) {
-                //     e.preventDefault();
-                //     Swal.fire({
-                //         icon: 'error',
-                //         title: 'Tidak Diizinkan',
-                //         text: <?= lang('Membership.age_caution') ?>
-                //     });
-                // }
+                // Tampilkan loading indicator
+                submitBtn.disabled = true;
+                btnText.textContent = "Saving...";
+                btnSpinner.classList.remove("hidden");
             });
         });
     </script>

@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\{MemberModel, ChildrenModel, SignatureModel, SettingModel};
+use App\Models\{MemberModel, ChildrenModel, SignatureModel, SettingModel, NotificationModel};
 use Ramsey\Uuid\Uuid;
 
 class Waiver extends BaseController
@@ -15,24 +15,28 @@ class Waiver extends BaseController
     public function index()
     {
         $uuid = $this->request->getGet('id');
-        $isEdit = !empty($uuid);
+        $memberModel = new MemberModel();
 
-        if (!$isEdit && !session()->get('waiver_step_1')) {
-            return redirect()->to('/waiver?id=' . $uuid)->with('error', 'Silakan mulai dari awal.');
+        // Jika tidak ada id dari URL, cek session waiver_step_1
+        if (empty($uuid)) {
+            $sessionData = session()->get('waiver_step_1');
+            if (!$sessionData || !isset($sessionData['uuid'])) {
+                return redirect()->to('/')->with('error', 'Akses tidak valid. Silakan mulai dari awal.');
+            }
+
+            $uuid = $sessionData['uuid'];
         }
 
+        // Ambil data member berdasarkan UUID
+        $member = $memberModel->where('uuid', $uuid)->first();
 
-        // if (!$id || !is_numeric($id)) {
-        //     return redirect()->to('/membership')->with('error', 'ID tidak valid.');
-        // }
-
-        $member = (new MemberModel())->where('uuid', $uuid)->first();
-        // if (!$member) {
-        //     return redirect()->to('/membership')->with('error', 'Member tidak ditemukan.');
-        // }
+        if (!$member) {
+            return redirect()->to('/')->with('error', 'Data member tidak ditemukan.');
+        }
 
         return view('member/waiver/form', ['member' => $member]);
     }
+
 
     // public function save()
     // {
@@ -403,6 +407,16 @@ class Waiver extends BaseController
         } catch (\Throwable $e) {
             log_message('error', 'Gagal mengirim email success waiver: ' . $e->getMessage());
         }
+
+        $notificationModel = new NotificationModel();
+        $notificationModel->insert([
+            'user_id' => $member['id'],
+            'title'   => lang('Membership.notif_new_member_title'),
+            'message' => str_replace('{name}', esc($member['name']), lang('Membership.notif_new_member_message')),
+            'type'    => 'waiver',
+            'is_read' => 0,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
 
         return $this->response->setJSON([
             'status' => 'success',

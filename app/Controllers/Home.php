@@ -9,7 +9,13 @@ class Home extends BaseController
         helper('settings');
     }
 
-    public function index()
+    public function homeIndex()
+    {
+        $version = "v" . env('app.version');
+        return $this->response->setBody("Welcome to Hellomonster {$version}!");
+    }
+
+    public function waiverIndex()
     {
         $logo_html = get_setting('logo_website');
         preg_match('/src="([^"]+)"/', $logo_html, $matches);
