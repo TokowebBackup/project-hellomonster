@@ -443,7 +443,7 @@ class Waiver extends BaseController
         $uuid = $this->request->getGet('id');
 
         if (!$uuid) {
-            return redirect()->to('/')->with('error', 'UUID tidak ditemukan.');
+            return redirect()->to('/start-waiver')->with('error', 'UUID tidak ditemukan.');
         }
 
         $memberModel = new MemberModel();
@@ -462,6 +462,6 @@ class Waiver extends BaseController
         session()->remove('waiver_step_2');
         session()->remove('waiver_member_id');
 
-        return redirect()->to('/')->with('message', 'Pendaftaran dibatalkan.');
+        return redirect()->to('/start-waiver')->with('message', 'Pendaftaran dibatalkan.');
     }
 }

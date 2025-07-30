@@ -7,7 +7,7 @@
     </svg>
     <p class="text-2xl font-semibold text-emerald-800">Success!</p>
     <p class="text-emerald-600">Your process has been completed successfully.</p>
-    <a href="<?= base_url('/') ?>" class="inline-block mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-blue-800 transition">
+    <a href="<?= base_url('/start-waiver') ?>" class="inline-block mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-blue-800 transition">
         Go to Homepage
     </a>
 </div>

@@ -13,7 +13,7 @@ use CodeIgniter\Router\Routes;
 */
 
 $routes->get('/', 'Home::homeIndex');
-$routes->get('/waiver', 'Home::waiverIndex');
+$routes->get('/start-waiver', 'Home::waiverIndex');
 $routes->post('language', 'Language::switch');
 
 /*
