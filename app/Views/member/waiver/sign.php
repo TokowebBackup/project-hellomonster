@@ -17,6 +17,17 @@
         <div class="border p-2 rounded bg-gray-50 mb-4">
             <canvas id="signature-pad" class="w-full h-48 border rounded bg-white"></canvas>
             <input type="hidden" id="csrf_token" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>">
+
+            <button
+                type="button"
+                onclick="clearCanvas()"
+                class="mt-2 inline-flex items-center px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-medium rounded transition-colors duration-200">
+                <!-- Icon Clear (Trash Bin) -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7L5 7M10 11v6M14 11v6M5 7l1 12a2 2 0 002 2h8a2 2 0 002-2l1-12" />
+                </svg>
+                Clear Signature
+            </button>
         </div>
 
         <!-- Checkbox Konfirmasi -->
@@ -67,6 +78,10 @@
     const signaturePad = new SignaturePad(canvas);
 
     // Resize canvas to match container width
+    function clearCanvas() {
+        signaturePad.clear();
+    }
+
     function resizeCanvas() {
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;

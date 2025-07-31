@@ -236,7 +236,7 @@
                 const nextBtnSpinner = nextBtn.querySelector('.btn-spinner');
 
                 nextBtn.disabled = true;
-                nextBtnText.textContent = <?= lang('Membership.loading') ?>;
+                nextBtnText.textContent = "<?= lang('Membership.loading') ?>";
                 nextBtnSpinner.classList.remove("hidden");
             });
         }

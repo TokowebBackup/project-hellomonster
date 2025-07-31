@@ -21,7 +21,7 @@ class Waiver extends BaseController
         if (empty($uuid)) {
             $sessionData = session()->get('waiver_step_1');
             if (!$sessionData || !isset($sessionData['uuid'])) {
-                return redirect()->to('/')->with('error', 'Akses tidak valid. Silakan mulai dari awal.');
+                return redirect()->to('/start-waiver')->with('error', 'Akses tidak valid. Silakan mulai dari awal.');
             }
 
             $uuid = $sessionData['uuid'];
@@ -31,7 +31,7 @@ class Waiver extends BaseController
         $member = $memberModel->where('uuid', $uuid)->first();
 
         if (!$member) {
-            return redirect()->to('/')->with('error', 'Data member tidak ditemukan.');
+            return redirect()->to('/start-waiver')->with('error', 'Data member tidak ditemukan.');
         }
 
         return view('member/waiver/form', ['member' => $member]);

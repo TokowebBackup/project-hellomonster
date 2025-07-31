@@ -109,14 +109,41 @@ class Admin extends BaseController
     //     return null;
     // }
 
+    private function normalizeCountryName(string $name): string
+    {
+        $map = [
+            'unitedstates' => 'United States',
+            'usa' => 'United States',
+            'unitedstatesofamerica' => 'United States',
+            'uk' => 'United Kingdom',
+            'unitedkingdom' => 'United Kingdom',
+            'southkorea' => 'Korea (Republic of)',
+            'indonesia' => 'Indonesia',
+            'england' => 'England',
+            'english' => 'England',
+            // Tambah mapping lain sesuai kebutuhan
+        ];
+
+        $key = strtolower(str_replace(' ', '', $name));
+        return $map[$key] ?? $name;
+    }
+
     private function getCountryCodeFromName($countryName)
     {
+        if ($countryName === null) {
+            return null;
+        }
+
         $countryName = trim($countryName);
         if ($countryName === '') return null;
 
-        $url = 'https://restcountries.com/v3.1/name/' . urlencode($countryName);
+        $countryName = $this->normalizeCountryName($countryName);
 
-        // Gunakan cURL sebagai ganti file_get_contents
+        log_message('debug', "Lookup country name for code: $countryName");
+
+        // $url = 'https://restcountries.com/v3.1/name/' . urlencode($countryName);
+        $url = 'https://restcountries.com/v3.1/name/' . rawurlencode($countryName);
+
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
@@ -140,12 +167,15 @@ class Admin extends BaseController
 
         $data = json_decode($response, true);
 
+
         if (!is_array($data)) {
             log_message('error', "Response bukan array untuk: $countryName. Response: $response");
             return null;
         }
 
         foreach ($data as $entry) {
+            // var_dump($entry['cca2']);
+            // die;
             if (isset($entry['cca2'])) {
                 return strtolower($entry['cca2']);
             }
@@ -154,6 +184,7 @@ class Admin extends BaseController
         log_message('error', "Tidak ditemukan cca2 untuk: $countryName. Response: " . print_r($data, true));
         return null;
     }
+
 
 
     public function members()
@@ -195,7 +226,10 @@ class Admin extends BaseController
             ->orderBy('country')
             ->findColumn('country');
 
-        $countries = array_filter($countries, fn($c) => !empty(trim($c)));
+        // $countries = array_filter($countries, fn($c) => !empty(trim($c)));
+        $countries = array_filter($countries, function ($c) {
+            return !empty(trim($c));
+        });
 
         $countryCodeCache = [];
 
@@ -302,9 +336,13 @@ class Admin extends BaseController
             return redirect()->to('/admin/login');
         }
 
-        $memberModel = new \App\Models\MemberModel();
+        $memberModel = new MemberModel();
 
         $memberModel->delete($id);
+
+        session()->remove('waiver_step_1');
+        session()->remove('waiver_step_2');
+        session()->remove('waiver_member_id');
 
         return redirect()->to('/admin/members')->with('message', 'Member berhasil dihapus.');
     }
