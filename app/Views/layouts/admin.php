@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<?= csrf_hash() ?>">
     <title><?= $title ?? 'Admin Dashboard | Hellomonster' ?></title>
     <link rel="icon" type="image/x-icon" href="<?= base_url('/assets/favicon.ico') ?>">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -190,22 +191,37 @@
         }
 
 
-        markAllReadBtn?.addEventListener('click', async () => {
-            const res = await fetch("<?= base_url('admin/notifications') ?>");
-            const notifs = await res.json();
+        // markAllReadBtn?.addEventListener('click', async () => {
+        //     const res = await fetch("<?= base_url('admin/notifications') ?>");
+        //     const notifs = await res.json();
 
-            await Promise.all(notifs.map(n => {
-                return fetch("<?= base_url('admin/notifications/mark-read') ?>", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: `id=${n.id}`
-                });
-            }));
+        //     await Promise.all(notifs.map(n => {
+        //         return fetch("<?= base_url('admin/notifications/mark-read') ?>", {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/x-www-form-urlencoded'
+        //             },
+        //             body: `id=${n.id}`
+        //         });
+        //     }));
+
+        //     fetchNotifications();
+        // });
+        markAllReadBtn?.addEventListener('click', async () => {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            await fetch("<?= base_url('admin/notifications/mark-all-read') ?>", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `<?= csrf_token() ?>=${csrfToken}`
+            });
 
             fetchNotifications();
         });
+
+
 
         // Fetch every 10s
         setInterval(fetchNotifications, 10000);

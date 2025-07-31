@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\{AdminModel, MemberModel, SignatureModel, ChildrenModel, SettingModel};
+use App\Models\{AdminModel, MemberModel, SignatureModel, ChildrenModel, SettingModel, NotificationModel};
 
 class Admin extends BaseController
 {
@@ -41,21 +41,7 @@ class Admin extends BaseController
         session()->destroy();
         return redirect()->to('/admin/login');
     }
-    private function getCountryCodeFromName($countryName)
-    {
-        $url = 'https://restcountries.com/v3.1/name/' . urlencode($countryName);
-        $response = @file_get_contents($url);
-        if ($response === false) {
-            return null; // gagal fetch
-        }
 
-        $data = json_decode($response, true);
-        if (isset($data[0]['cca2'])) {
-            return strtolower($data[0]['cca2']); // misal 'ID'
-        }
-
-        return null;
-    }
     public function dashboard()
     {
         if (!session()->get('admin_logged_in')) {
@@ -66,6 +52,7 @@ class Admin extends BaseController
 
         $totalMembers = $memberModel->countAllResults();
 
+        // Data per bulan (existing)
         $builder = $memberModel->builder();
         $builder->select('MONTH(created_at) as month, COUNT(*) as count');
         $builder->where('YEAR(created_at)', date('Y'));
@@ -78,6 +65,20 @@ class Admin extends BaseController
             $monthlyCounts[(int)$row->month] = (int)$row->count;
         }
 
+        // Data anggota per negara
+        $builder2 = $memberModel->builder();
+        $builder2->select('country, COUNT(*) as count');
+        $builder2->groupBy('country');
+        $countryResult = $builder2->get()->getResult();
+
+        $countryLabels = [];
+        $countryCounts = [];
+
+        foreach ($countryResult as $row) {
+            $countryLabels[] = $row->country ?: 'Unknown';
+            $countryCounts[] = (int)$row->count;
+        }
+
         $logo_html = get_setting('logo_website');
         preg_match('/src="([^"]+)"/', $logo_html, $matches);
         $logo_src = $matches[1] ?? '';
@@ -85,9 +86,75 @@ class Admin extends BaseController
         return view('admin/dashboard', [
             'totalMembers' => $totalMembers,
             'monthlyCounts' => $monthlyCounts,
+            'countryLabels' => $countryLabels,
+            'countryCounts' => $countryCounts,
             'logo_src' => $logo_src,
         ]);
     }
+
+
+    // private function getCountryCodeFromName($countryName)
+    // {
+    //     $url = 'https://restcountries.com/v3.1/name/' . urlencode($countryName);
+    //     $response = @file_get_contents($url);
+    //     if ($response === false) {
+    //         return null; // gagal fetch
+    //     }
+
+    //     $data = json_decode($response, true);
+    //     if (isset($data[0]['cca2'])) {
+    //         return strtolower($data[0]['cca2']); // misal 'ID'
+    //     }
+
+    //     return null;
+    // }
+
+    private function getCountryCodeFromName($countryName)
+    {
+        $countryName = trim($countryName);
+        if ($countryName === '') return null;
+
+        $url = 'https://restcountries.com/v3.1/name/' . urlencode($countryName);
+
+        // Gunakan cURL sebagai ganti file_get_contents
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            log_message('error', 'cURL error: ' . curl_error($ch));
+            curl_close($ch);
+            return null;
+        }
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode !== 200 || !$response) {
+            log_message('error', "Gagal fetch country code untuk: $countryName. HTTP code: $httpCode");
+            return null;
+        }
+
+        $data = json_decode($response, true);
+
+        if (!is_array($data)) {
+            log_message('error', "Response bukan array untuk: $countryName. Response: $response");
+            return null;
+        }
+
+        foreach ($data as $entry) {
+            if (isset($entry['cca2'])) {
+                return strtolower($entry['cca2']);
+            }
+        }
+
+        log_message('error', "Tidak ditemukan cca2 untuk: $countryName. Response: " . print_r($data, true));
+        return null;
+    }
+
 
     public function members()
     {
@@ -130,8 +197,16 @@ class Admin extends BaseController
 
         $countries = array_filter($countries, fn($c) => !empty(trim($c)));
 
+        $countryCodeCache = [];
+
         foreach ($members as &$m) {
-            $m['country_code'] = $this->getCountryCodeFromName($m['country']);
+            $countryName = $m['country'];
+
+            if (!isset($countryCodeCache[$countryName])) {
+                $countryCodeCache[$countryName] = $this->getCountryCodeFromName($countryName);
+            }
+
+            $m['country_code'] = $countryCodeCache[$countryName];
         }
         unset($m);
 
@@ -636,20 +711,37 @@ class Admin extends BaseController
         ]);
     }
 
+    // public function notifications()
+    // {
+    //     $notifModel = new NotificationModel();
+    //     // $notifs = $notifModel->orderBy('created_at', 'DESC')->findAll(10); // Ambil 10 terakhir
+    //     $notifs = $notifModel->orderBy('created_at', 'DESC')->findAll(10);
+
+
+    //     return $this->response->setJSON($notifs);
+    // }
     public function notifications()
     {
-        $notifModel = new \App\Models\NotificationModel();
-        // $notifs = $notifModel->orderBy('created_at', 'DESC')->findAll(10); // Ambil 10 terakhir
-        $notifs = $notifModel->where('is_read', 0)->orderBy('created_at', 'DESC')->findAll(10);
-
+        $notifModel = new NotificationModel();
+        $notifs = $notifModel->where('is_read', 0)  // hanya yang belum dibaca
+            ->orderBy('created_at', 'DESC')
+            ->findAll(10);
 
         return $this->response->setJSON($notifs);
+    }
+
+    public function markAllNotificationsRead()
+    {
+        $notifModel = new \App\Models\NotificationModel();
+        $notifModel->where('is_read', 0)->set(['is_read' => 1])->update();
+
+        return $this->response->setJSON(['status' => 'ok']);
     }
 
     public function markNotificationRead()
     {
         $id = $this->request->getPost('id');
-        $notifModel = new \App\Models\NotificationModel();
+        $notifModel = new NotificationModel();
 
         $notifModel->update($id, ['is_read' => 1]);
 

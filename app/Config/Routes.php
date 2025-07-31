@@ -29,6 +29,7 @@ $routes->group('admin', function ($routes) {
     // Notification
     $routes->get('notifications', 'Admin::notifications');
     $routes->post('notifications/mark-read', 'Admin::markNotificationRead');
+    $routes->post('notifications/mark-all-read', 'Admin::markAllNotificationsRead');
 
     // Dashboard
     $routes->get('dashboard', 'Admin::dashboard');
