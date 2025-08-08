@@ -59,6 +59,8 @@ $routes->group('admin', function ($routes) {
     $routes->get('settings/edit/(:num)', 'Admin::editSetting/$1');
     $routes->post('settings/update/(:num)', 'Admin::updateSetting/$1');
     $routes->post('settings/upload-image', 'Admin::uploadImage');
+    $routes->get('change-password', 'Admin::changePassword');
+    $routes->post('change-password', 'Admin::updatePassword');
 });
 
 /*

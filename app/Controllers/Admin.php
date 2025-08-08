@@ -29,12 +29,14 @@ class Admin extends BaseController
 
         if ($admin && password_verify($this->request->getPost('password'), $admin['password'])) {
             session()->set('admin_logged_in', true);
+            session()->set('admin_id', $admin['id']); // Store admin ID in session
             session()->set('admin_name', $admin['name']);
             return redirect()->to('/admin/dashboard');
         }
 
         return redirect()->back()->with('error', 'Invalid email or password');
     }
+
 
     public function logout()
     {
@@ -784,5 +786,54 @@ class Admin extends BaseController
         $notifModel->update($id, ['is_read' => 1]);
 
         return $this->response->setJSON(['status' => 'ok']);
+    }
+
+    public function changePassword()
+    {
+        if (!session()->get('admin_logged_in')) {
+            return redirect()->to('/admin/login');
+        }
+
+        $logo_html = get_setting('logo_website');
+        preg_match('/src="([^"]+)"/', $logo_html, $matches);
+        $logo_src = $matches[1] ?? '';
+
+        return view('admin/change_password', ['logo_src' => $logo_src]);
+    }
+
+    public function updatePassword()
+    {
+        if (!session()->get('admin_logged_in')) {
+            return redirect()->to('/admin/login');
+        }
+
+        $adminModel = new AdminModel();
+        $adminId = session()->get('admin_id'); // Retrieve admin ID from session
+        $currentPassword = $this->request->getPost('current_password');
+        $newPassword = $this->request->getPost('new_password');
+        $confirmPassword = $this->request->getPost('confirm_password');
+
+        // Fetch the admin record using the admin ID
+        $admin = $adminModel->find($adminId);
+
+        // Check if the admin record exists
+        if (!$admin) {
+            return redirect()->back()->with('error', 'Admin not found.');
+        }
+
+        // Check if the current password is correct
+        if (!password_verify($currentPassword, $admin['password'])) {
+            return redirect()->back()->with('error', 'Current password is incorrect.');
+        }
+
+        // Check if the new password and confirmation match
+        if ($newPassword !== $confirmPassword) {
+            return redirect()->back()->with('error', 'New password and confirmation do not match.');
+        }
+
+        // Update the password
+        $adminModel->update($adminId, ['password' => password_hash($newPassword, PASSWORD_DEFAULT)]);
+
+        return redirect()->to('/admin/settings')->with('message', 'Password successfully updated.');
     }
 }

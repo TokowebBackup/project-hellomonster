@@ -79,6 +79,8 @@
                 <a href="<?= base_url('admin/sign') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/sign') ? 'bg-primary text-white' : 'text-gray-700' ?>">Signatures</a>
 
                 <a href="<?= base_url('admin/settings') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/settings') ? 'bg-primary text-white' : 'text-gray-700' ?>">Settings</a>
+                <a href="<?= base_url('admin/change-password') ?>" class="block py-2 px-4 rounded hover:bg-primary hover:text-white <?= url_is('admin/change-password') ? 'bg-primary text-white' : 'text-gray-700' ?>">Change Password</a>
+
 
                 <a href="<?= base_url('admin/logout') ?>" class="block py-2 px-4 text-red-600 hover:text-white hover:bg-red-600 rounded">Logout</a>
             </nav>
