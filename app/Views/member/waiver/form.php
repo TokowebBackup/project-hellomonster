@@ -66,29 +66,31 @@
                     required
                     class="w-full border px-3 py-2 rounded-md" />
             </div> -->
-            <div class="mb-6 flex gap-2">
-                <!-- Hari -->
-                <input type="number" name="birth_day" id="birth_day" min="1" max="31"
-                    value="<?= esc($birthDay) ?>" placeholder="<?= lang('Membership.placehoder_day') ?>"
-                    required class="w-[35%] border px-3 py-2 rounded-md" />
-
-                <!-- Bulan (Select2) -->
-                <select name="birth_month" id="birth_month" required
-                    class="select2-custom w-[20%] border px-3 py-2 rounded-md">
-                    <option value=""><?= lang('Membership.placehoder_month') ?></option>
-                    <?php foreach (lang('Membership.months') as $num => $name): ?>
-                        <option value="<?= $num ?>" <?= ($birthMonth == $num) ? 'selected' : '' ?>>
-                            <?= $name ?>
-                        </option>
-                    <?php endforeach; ?>
+            <div class="mb-6 flex flex-col sm:flex-row gap-2">
+                <!-- Hari (Dropdown) -->
+                <select name="birth_day" id="birth_day" required
+                    class="flex-1 border px-3 py-2 rounded-md">
+                    <option value=""><?= lang('Membership.placehoder_day') ?></option>
+                    <?php for ($i = 1; $i <= 31; $i++): ?>
+                        <option value="<?= $i ?>" <?= ($birthDay == $i) ? 'selected' : '' ?>><?= $i ?></option>
+                    <?php endfor; ?>
                 </select>
 
-                <!-- Tahun -->
-                <input type="number" name="birth_year" id="birth_year"
-                    value="<?= esc($birthYear) ?>" placeholder="<?= lang('Membership.placehoder_year') ?>"
-                    min="1900" max="<?= date('Y') ?>"
-                    required class="w-[55%] border px-3 py-2 rounded-md" />
+                <!-- Bulan (Dropdown) -->
+                <select name="birth_month" id="birth_month" required class="select2-custom w-[20%] border px-3 py-2 rounded-md">
+                    <option value=""><?= lang('Membership.placehoder_month') ?></option> <?php foreach (lang('Membership.months') as $num => $name): ?> <option value="<?= $num ?>" <?= ($birthMonth == $num) ? 'selected' : '' ?>> <?= $name ?> </option> <?php endforeach; ?>
+                </select>
+
+                <!-- Tahun (Dropdown) -->
+                <select name="birth_year" id="birth_year" required
+                    class="flex-1 border px-3 py-2 rounded-md">
+                    <option value=""><?= lang('Membership.placehoder_year') ?></option>
+                    <?php for ($y = date('Y'); $y >= 1900; $y--): ?>
+                        <option value="<?= $y ?>" <?= ($birthYear == $y) ? 'selected' : '' ?>><?= $y ?></option>
+                    <?php endfor; ?>
+                </select>
             </div>
+
 
 
             <input type="hidden" name="birthdate" id="birthdate" />
@@ -112,12 +114,21 @@
             </div> -->
 
             <div class="mb-6">
-                <label class="flex items-start gap-2">
-                    <input type="checkbox" name="agree_terms" required class="mt-1" <?= $member['agree_terms'] ? 'checked' : '' ?>>
-                    <span class="text-sm text-gray-700">
-                        <?= lang('Membership.agree_terms') ?>
-                    </span>
-                </label>
+                <?php if (isset($_GET['edit']) === ''): ?>
+                    <label class="flex items-start gap-2">
+                        <input type="checkbox" name="agree_terms" required class="mt-1" <?= $member['agree_terms'] ? 'checked' : '' ?>>
+                        <span class="text-sm text-gray-700">
+                            <?= lang('Membership.agree_terms') ?>
+                        </span>
+                    </label>
+                <?php else: ?>
+                    <label class="flex items-start gap-2">
+                        <input type="checkbox" name="agree_terms" required class="mt-1">
+                        <span class="text-sm text-gray-700">
+                            <?= lang('Membership.agree_terms') ?>
+                        </span>
+                    </label>
+                <?php endif; ?>
             </div>
         </div>
 

@@ -760,6 +760,17 @@ class Admin extends BaseController
 
     //     return $this->response->setJSON($notifs);
     // }
+    public function notificationList()
+    {
+        $notifModel = new NotificationModel();
+        $data['title'] = "Notifications List";
+        $data['notifications'] = $notifModel
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+
+        return view('admin/notifications/list', $data);
+    }
+
     public function notifications()
     {
         $notifModel = new NotificationModel();

@@ -47,7 +47,7 @@
         <?php endif; ?>
     </div>
 
-    <button onclick="location.href='/waiver?id=<?= esc($uuid) ?>'" class="w-full border border-red-600 text-red-600 rounded py-2 font-medium mb-6">
+    <button onclick="location.href='/waiver?id=<?= esc($uuid) ?>&edit=<?= strtotime($member['created_at']) ?>'" class="w-full border border-red-600 text-red-600 rounded py-2 font-medium mb-6">
         <?= lang('Membership.edit') ?>
     </button>
 

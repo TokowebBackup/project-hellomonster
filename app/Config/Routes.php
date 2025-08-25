@@ -61,6 +61,9 @@ $routes->group('admin', function ($routes) {
     $routes->post('settings/upload-image', 'Admin::uploadImage');
     $routes->get('change-password', 'Admin::changePassword');
     $routes->post('change-password', 'Admin::updatePassword');
+
+    // Notification
+    $routes->get('notifications/list', 'Admin::notificationList');
 });
 
 /*
