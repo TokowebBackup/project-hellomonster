@@ -27,7 +27,10 @@ class Filters extends BaseFilters
      */
     public function __construct()
     {
-        service('request')->setLocale(session('lang') ?? 'en');
+        // service('request')->setLocale(session('lang') ?? 'en');
+        if (PHP_SAPI !== 'cli') {
+            service('request')->setLocale(session('lang') ?? 'en');
+        }
     }
 
     public array $aliases = [
@@ -78,7 +81,13 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
-            'csrf',
+            'csrf' => [
+                // Added by me Puji Ermanto<pujiermanto@gmail.com> | AKA Jhony Rotten | Jhony Was Here
+                'except' => [
+                    'membership/payment-callback',
+                    'waiver/sign/save',
+                ],
+            ],
         ],
         'after' => [
             // 'honeypot',

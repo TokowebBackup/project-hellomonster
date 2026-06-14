@@ -23,19 +23,30 @@ class CityApi extends Controller
         try {
             $client = \Config\Services::curlrequest();
 
-            $response = $client->get('https://countriesnow.space/api/v0.1/countries/cities/q', [
-                'query' => ['country' => $country]
-            ]);
+            $response = $client->get('https://www.emsifa.com/api-wilayah-indonesia/api/regencies/32.json');
+            // contoh: ambil semua kota/kabupaten dari Jawa Barat (32)
 
             $body = $response->getBody();
             $json = json_decode($body, true);
 
-            if (isset($json['data']) && is_array($json['data'])) {
-                return $this->response->setJSON($json['data']);
+            $cities = [];
+
+            foreach ($json as $item) {
+                $name = strtoupper($item['name']);
+
+                // Cek apakah mengandung "KOTA" atau "KABUPATEN"
+                if (str_contains($name, 'KOTA')) {
+                    $cities[] = 'KOTA ' . trim(str_replace('KOTA', '', $name));
+                } elseif (str_contains($name, 'KABUPATEN')) {
+                    $cities[] = 'KAB. ' . trim(str_replace('KABUPATEN', '', $name));
+                } else {
+                    $cities[] = $name;
+                }
             }
 
-            return $this->response->setStatusCode(ResponseInterface::HTTP_BAD_GATEWAY)
-                ->setJSON(['error' => 'Gagal mengambil data kota']);
+            sort($cities);
+
+            return $this->response->setJSON($cities);
         } catch (\Throwable $e) {
             return $this->response->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR)
                 ->setJSON(['error' => $e->getMessage()]);

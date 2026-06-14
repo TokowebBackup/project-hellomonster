@@ -29,7 +29,7 @@
     <!-- Password -->
     <div class="relative">
         <input type="password" name="password" id="password"
-            class="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md placeholder-transparent focus:border-blue-500 focus:ring-0"
+            class="peer w-full px-4 pt-6 pb-2 pr-10 border border-gray-300 rounded-md placeholder-transparent focus:border-blue-500 focus:ring-0"
             placeholder="Password" required />
         <label for="password"
             class="absolute left-4 top-2 text-sm text-gray-500 transition-all
@@ -37,6 +37,10 @@
                    peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-500">
             Password
         </label>
+        <button type="button" id="togglePassword"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xl select-none">
+            👁️
+        </button>
     </div>
 
     <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700">
@@ -48,7 +52,7 @@
 
 <!-- Loading Overlay -->
 <div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-75 z-50 hidden flex items-center justify-center">
-    <div class="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
+    <div class="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div> <span class="text-blue-800 font-semibold text-1xl">Loading</span>
 </div>
 
 <script>
@@ -56,6 +60,16 @@
         document.getElementById('loadingOverlay').classList.remove('hidden');
         return true;
     }
+
+    // Toggle view password
+    const toggleBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    toggleBtn.addEventListener('click', function() {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        toggleBtn.textContent = isPassword ? '🙈' : '👁️';
+    });
 </script>
 
 <?= $this->endSection() ?>

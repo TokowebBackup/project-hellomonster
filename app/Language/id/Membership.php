@@ -5,7 +5,7 @@ return [
     'back_home' => 'Kembali ke halaman utama',
     'email' => 'Email',
     'full_name' => 'Nama Lengkap',
-    'phone_number' => 'No. HP',
+    'children_name' => 'Nama Anak',
     'birthdate' => 'Tanggal Lahir',
     'country' => 'Negara',
     'city' => 'Kota',
@@ -19,6 +19,26 @@ return [
     'full_name' => 'Nama Lengkap',
     'phone_number' => 'Nomor Telepon',
     'birthdate' => 'Tanggal Lahir',
+    'day' => 'Day',
+    'month' => 'Month',
+    'year' => 'Year',
+    'months' => [
+        1 => 'Januari',
+        2 => 'Februari',
+        3 => 'Maret',
+        4 => 'April',
+        5 => 'Mei',
+        6 => 'Juni',
+        7 => 'Juli',
+        8 => 'Agustus',
+        9 => 'September',
+        10 => 'Oktober',
+        11 => 'November',
+        12 => 'Desember',
+    ],
+    'birth_month' => 'Bulan',
+    'birth_day' => 'Hari',
+    'birth_year' => 'Tahun',
     'country' => 'Negara',
     'city' => 'Kota',
     'address' => 'Alamat',
@@ -29,6 +49,133 @@ return [
     'select_country_first' => 'Pilih negara dulu...',
     'select_city' => 'Pilih kota...',
     'fetch_cities_failed' => 'Gagal memuat kota',
-    "agree_terms" => "Dengan ini saya menyatakan bahwa data yang saya isi adalah benar dan saya bersedia mengikuti ketentuan yang berlaku di platform Hellomonster.id. Saya juga membebaskan pihak Hellomonster dari segala tuntutan hukum jika saya melanggar kebijakan yang telah ditetapkan."
+    "agree_terms" => "Dengan ini saya menyatakan bahwa data yang saya isi adalah benar dan saya bersedia mengikuti ketentuan yang berlaku di platform Hellomonster.id. Saya juga membebaskan pihak Hellomonster dari segala tuntutan hukum jika saya melanggar kebijakan yang telah ditetapkan.",
+    'personal_data' => 'Data Pribadi',
+    'any_minors' => 'Apakah ada anak di bawah usia 18 tahun?',
+    'add_minors' => 'Tambah Anak',
+    'edit' => 'Edit',
+    'remove' => 'Hapus',
+    'birth_date' => 'Tanggal Lahir',
+    'gender' => 'Jenis Kelamin',
+    'male' => 'Laki-laki',
+    'female' => 'Perempuan',
+    'cancel' => 'Batal',
+    'save' => 'Simpan',
+    'alert_title' => 'Info',
+    'alert_text' => 'Anda belum menambahkan data anak di bawah 18 tahun. Silakan klik tombol "Tambah Anak" jika ingin menambahkan.',
+    'confirm_delete_title' => 'Hapus anak ini?',
+    'confirm_delete_text' => 'Data tidak bisa dikembalikan setelah dihapus!',
+    'agree' => 'Setuju',
+    'decline' => 'Menolak',
+    'waiver_notice_en_id' => 'Pernyataan dan persetujuan ini dibuat dalam bahasa Inggris dan Bahasa Indonesia. Jika terdapat perbedaan penafsiran, versi Bahasa Indonesia yang berlaku.',
+    'waiver_confirmation_truth' => 'Saya menyatakan dan mengonfirmasi bahwa informasi yang saya masukkan adalah akurat dan benar.',
+    'header_exclusion' => 'PENGECUALIAN DAN PERSETUJUAN HARAP BACA DOKUMEN INI DENGAN BAIK-BAIK.',
+    'exclusion_title' => 'DENGAN MENYETUJUI DOKUMEN INI, ANDA MEMBERIKAN PERNYATAAN PELEPASAN TANGGUNG JAWAB DAN PERSETUJUAN ATAS NAMA DIRI SENDIRI DAN ANAK DI BAWAH UMUR (JIKA ADA) SEBAGAIMANA DIJELASKAN BERIKUT:',
 
+    'exclusion_notice' => <<<EOD
+Dengan mempertimbangkan layanan dan fasilitas yang ditawarkan dan/atau disediakan oleh Hellomonster, pemegang saham, karyawan, direktur, komisaris dan agennya, serta semua orang atau badan berwenang lainnya yang bertindak dalam kapasitas apa pun atas nama mereka (secara bersama-sama disebut “HM”), Saya dengan ini, secara tanpa syarat dan tidak dapat ditarik kembali, mengakui dan menyetujui ketentuan berikut dalam dokumen ini (“Pengecualian dan Persetujuan”):
+
+KAPASITAS DAN WEWENANG
+
+Saya, individu yang tercantum di bawah ini, telah mencapai usia minimal 18 tahun, dan menerima serta menyetujui Pengecualian dan Persetujuan ini atas nama saya sendiri, dan/atau, atas nama peserta yang tercantum di bawah ini yang berusia di bawah 18 tahun ("Anak Dibawah Umur") sebagai, atau sebagai perwakilan yang diberi wewenang atas nama, orang tua atau wali mereka yang sah.
+
+Sehubungan dengan Anak Dibawah Umur yang tercantum (jika ada) di bawah ini, saya menyatakan bahwa saya memiliki kewenangan penuh sebagai, atau atas nama, orang tua atau wali sah dari Anak Dibawah Umur untuk menyetujui ketentuan Pengecualian dan Persetujuan ini atas nama mereka.
+
+ASUMSI DAN PENGAKUAN ATAS SELURUH RISIKO
+
+HM adalah penyedia layanan dan fasilitas rekreasi yang ditawarkan dan/atau disediakan oleh HM di lokasinya yang mencakup SuperPark Indonesia dan Pororo Park Indonesia (“Tempat HM”) termasuk, namun tidak terbatas pada, semua aktivitas yang berlokasi di dalam SuperPark Indonesia dan Pororo Park Indonesia seperti namun tidak terbatas pada trampolin, pedal car, bola basket, lapangan ninja, permainan sepak bola, panjat dinding, perosotan dan kegiatan olah raga dan rekreasi lainnya di lokasi Tempat HM di Indonesia (secara bersama-sama disebut “Fasilitas HM”) yang mencakup penggunaan, penyewaan atau pemeliharaan barang atau peralatan apa pun, dan penggunaan, Fasilitas HM apa pun, dan aktivitas apa pun (termasuk namun tidak terbatas pada kelas pelatihan, instruksi dan/atau kursus apa pun) (secara bersama-sama disebut “Kegiatan HM”) di Tempat HM.
+
+Saya mengakui dan memahami bahwa Kegiatan HM berpotensi berbahaya dengan banyak risiko dan bahaya yang melekat dan bahwa risiko tertentu tidak dapat dihilangkan pada saat melakukan Kegiatan HM dan penggunaan Fasilitas HM. Setiap partisipasi dalam Kegiatan HM, penggunaan atau penyalahgunaan Fasilitas HM dan/atau TEMPAT HM mempunyai risiko yang signifikan bagi peserta. Risiko tersebut dapat mencakup, namun tidak terbatas pada, luka dan memar, terjatuh, patah tulang, cedera pada pergelangan tangan, lengan, kaki, pergelangan kaki, punggung, kepala dan leher, cedera karena terjatuh atau bersentuhan dengan peserta lain, cedera tulang belakang, gegar otak, serangan jantung, kelelahan akibat panas, cedera serius lainnya, cacat tetap dan/atau bahkan kematian. Saya, secara tanpa syarat dan tidak dapat ditarik kembali, setuju untuk berpartisipasi dalam Kegiatan HM dan/atau menggunakan Fasilitas HM dan Tempat HM atas risiko saya sendiri, dan tanpa syarat, menyetujui untuk menanggung dan bertanggungjawab secara penuh serta menerima semua risiko yang terkait dengannya.
+
+PENGGUNAAN LAYANAN DAN FASILITAS YANG BENAR
+
+Saya memahami dan menyetujui bahwa semua Fasilitas HM di Tempat HM harus digunakan secara bertanggung jawab, sesuai dengan semua tanda-tanda serta arahan dan instruksi dari HM dan staf, karyawan dan agennya, dan sesuai dengan keselamatan saya, keselamatan anak di bawah umur yang saya tanggung dan keselamatan orang lain ("Penggunaan yang Benar").
+
+PROPERTI DAN BARANG
+
+Saya berjanji untuk menjaga barang-barang saya sendiri di Tempat HM dan tanpa syarat dan tidak dapat ditarik kembali melepaskan HM dari tanggung jawab apa pun atas kehilangan atau kerusakan apa pun pada harta benda saya (apa pun penyebabnya) selama terlibat dalam Aktivitas HM apa pun.
+
+PERNYATAAN KESEHATAN
+
+Saya merepresentasikan, menyatakan, menjamin dan mengaransi bahwa saya dan anak di bawah umur yang terdaftar, pada tanggal Pengecualian ini dan pada setiap kunjungan ke TEMPAT HM, dalam keadaan sehat dan fisik yang baik dan bebas dari kondisi medis apa pun yang dapat mempengaruhi atau menghalangi dari kita untuk berpartisipasi dengan aman dalam aktivitas apa pun (“Kesehatan dan Kondisi yang Baik”). Saya setuju tanpa syarat dan tidak dapat ditarik kembali bahwa siapa pun yang tidak dalam kondisi Kesehatan dan Kondisi yang Baik tidak boleh berpartisipasi dalam Kegiatan HM apa pun. Saya memahami bahwa demi alasan keamanan, wanita hamil dan pelanggan yang memiliki masalah kesehatan sebelumnya, yang memiliki berat badan lebih dari 120kg atau memakai gips tidak diizinkan berada di Fasilitas HM. Saya harus mencari nasihat medis jika ragu. Saya setuju tanpa syarat dan tidak dapat ditarik kembali untuk memberi tahu staf HM jika ada keyakinan yang masuk akal bahwa siapa pun yang berada di atau tiba di Tempat HM mungkin tidak dalam Kesehatan dan Kondisi yang Baik.
+
+Saya setuju tanpa syarat dan tidak dapat ditarik kembali untuk membayar biaya dan memberi wewenang kepada HM untuk mengambil semua langkah yang dianggap perlu untuk melindungi kesejahteraan saya dan kesejahteraan Anak Dibawah Umur dalam tanggungan saya, termasuk administrasi perawatan medis darurat dan transportasi ambulans.
+
+KEWAJIBAN PERAWATAN DAN PENGAWASAN
+
+Saya memahami bahwa penggunaan Fasilitas HM disertai dengan Risiko yang menyertainya dan siapa pun (termasuk Anak Dibawah Umur) yang menggunakan Fasilitas HM harus berada dalam kondisi Kesehatan dan Kondisi yang Baik dan hanya melakukan Penggunaan yang Benar atas Fasilitas HM. Saya mengakui bahwa tindakan saya, dan tindakan Anak Dibawah Umur saya di TEMPAT HM dapat menyebabkan kerugian dan cedera pada orang lain di TEMPAT HM.
+
+Saya setuju bahwa Anak Dibawah Umur harus tetap berada dalam perawatan dan pengawasan saya saat menggunakan Fasilitas HM di lokasi. Saya menyatakan dan menjamin bahwa saya adalah orang tua atau wali yang sah dari Anak Dibawah Umur di rombongan saya atau telah diberi wewenang yang sah oleh orang tua atau wali yang sah dan memikul tugas dan kewajiban orang tua atau wali yang sah atas Anak Dibawah Umur di rombongan saya.
+
+Saya mengakui tanpa syarat dan tidak dapat ditarik kembali bahwa HM tidak bertanggung jawab atas perawatan dan pengawasan Anak Dibawah Umur yang tidak didampingi di Tempat HM, yang akan tetap menjadi tanggung jawab orang tua atau wali yang sah.
+
+Terlepas dari ketentuan umum di atas, saya mengakui bahwa setiap anak di bawah umur yang berusia 7 tahun ke bawah harus didampingi dan diawasi oleh orang dewasa yang bertanggung jawab berusia 18 tahun ke atas setiap saat.
+
+GANTI RUGI
+
+Sejauh diizinkan oleh hukum, saya setuju tanpa syarat dan tidak dapat ditarik kembali setuju untuk mengganti kerugian, membebaskan, dan membela HM dan pemegang saham, pejabat, direktur, komisaris, karyawan, agen, afiliasi, penerus, dan penerima hak yang diizinkannya (secara bersama-sama disebut “Pihak yang Diberi Ganti Rugi” ) terhadap setiap dan seluruh kerugian, kerusakan, tanggung jawab, kekurangan, klaim (termasuk klaim apa pun yang diajukan oleh atau atas nama Anak Dibawah Umur dalam tanggung jawab saya terhadap HM), tindakan, keputusan, penyelesaian, bunga, putusan, penalti, denda, biaya, atau biaya apa pun, termasuk biaya pengacara, yang ditanggung oleh Pihak yang Diberi Ganti Rugi (secara bersama-sama disebut “Kerugian”), yang timbul dari atau terkait dengan
+
+i. pelanggaran atau tidak terpenuhinya kewajiban apa pun oleh saya atau Anak Dibawah Umur mana pun yang berada dalam tanggung jawab saya berdasarkan ketentuan ini;
+
+ii. tindakan atau kelalaian apa pun yang lalai atau lebih patut disalahkan (termasuk kesalahan apa pun yang ceroboh atau disengaja) yang dilakukan oleh saya atau Anak Dibawah Umur mana pun yang berada dalam tanggung jawab saya termasuk namun tidak terbatas pada pelanggaran kewajiban saya untuk merawat dan mengawasi Anak Dibawah Umur;
+
+iii. cedera tubuh apa pun, kematian seseorang, atau kerusakan pada harta benda pribadi yang nyata atau berwujud yang disebabkan oleh tindakan atau kelalaian saya atau Anak Dibawah Umur yang lalai atau lebih bersalah dari saya atau Anak Dibawah Umur yang menjadi tanggung jawab saya (termasuk kesalahan yang ceroboh atau disengaja);
+
+iv. kegagalan saya atau Anak Dibawah Umur mana pun yang menjadi tanggung jawab saya untuk mematuhi undang-undang, peraturan, atau kode etik yang berlaku dalam penggunaan Fasilitas HM; dan/atau
+
+v. Anak Dibawah Umur tanpa pendamping di Tempat HM di mana saya telah menyetujui penggunaan Fasilitas HM tanpa pendamping.
+
+PENGECUALIAN, PEMBEBASAN DAN PELEPASAN
+
+Sejauh diizinkan oleh undang-undang, saya dengan ini secara tegas, tanpa syarat dan tidak dapat ditarik kembali menyetujui dan atas nama setiap Anak Dibawah Umur yang terdaftar dalam tanggung jawab saya untuk mengesampingkan, melepaskan, membebaskan, menyingkirkan setiap dan semua klaim, tuntutan atau permintaan yang timbul dari, dan hak untuk menuntut HM dan para pemegang saham, pejabat, direktur, komisaris, karyawan, agen, perusahaan asuransi dan kuasanya (secara bersama-sama disebut “Pihak yang Dibebaskan”) dari setiap dan seluruh klaim, tuntutan, penyebab tindakan, keputusan, hak, biaya, kerusakan, hutang, kewajiban, pengeluaran (termasuk biaya perwakilan(-perwakilan) hukum), kerugian dan tanggung jawab dalam bentuk apa pun, baik diketahui atau tidak, baik berdasarkan tanggung jawab mutlak, kelalaian, atau lainnya (secara kolektif disebut “Klaim”) yang mungkin saya ajukan terhadap Pihak yang Dibebaskan yang timbul dari, atau dengan cara apa pun terkait dengan penggunaan saya atas Fasilitas HM, kecuali jika Klaim tersebut terbukti secara langsung karena kelalaian HM.
+
+PERSETUJUAN DAN PENGAKUAN
+
+Saya setuju bahwa saya akan menggunakan Fasilitas HM dengan cara yang bertanggung jawab, dan dengan menghormati keselamatan saya sendiri dan keselamatan orang lain. Saya mengakui bahwa saya mungkin bertanggung jawab kepada orang lain atas cedera yang mereka alami, jika cedera tersebut timbul karena tindakan saya yang tidak bertanggung jawab, disengaja, atau ceroboh. Saya setuju untuk membayar segala kerugian, termasuk namun tidak terbatas pada kerugian materil dan immateriil, yang terjadi pada bagian mana pun dari Fasilitas HM sebagai akibat dari perilaku saya yang tidak bertanggung jawab, disengaja, atau ceroboh. Jika saya bertanggung jawab atas Anak Dibawah Umur (baik sebagai orang tua, wali sah, wali, atau lainnya), saya setuju untuk terikat oleh Pengecualian dan Persetujuan ini atas nama Anak Dibawah Umur tersebut. Saya bertanggung jawab atas keselamatan Anak Dibawah Umur dan berjanji untuk mengawasinya secara langsung setiap saat.
+
+OTORISASI UNTUK MENGGUNAKAN GAMBAR DAN INFORMASI PRIBADI
+
+Saya mengakui bahwa HM dapat mengoperasikan televisi sirkuit tertutup atau kamera di Tempat HM dan dengan ini saya menyetujui pengambilan gambar dan video untuk tujuan keamanan bagi saya dan/atau anak di bawah umur yang saya daftarkan. Saya, secara tanpa syarat dan tidak dapat ditarik kembali, menyetujui bahwa gambar dan video tersebut akan menjadi hak milik eksklusif HM dan saya dengan ini menyetujui pengumpulan, penggunaan, dan pengungkapan informasi pribadi tersebut oleh HM untuk tujuan keamanan dan peninjauan, termasuk saat diperlukan, mengharuskan gambar dan video tersebut diserahkan kepada pihak berwenang untuk penyelidikan lebih lanjut.
+
+UMUM
+
+Pengecualian dan Persetujuan ini berlaku selamanya, untuk tanggal apa pun di masa depan termasuk tanggal hari ini, di mana saya atau anak di bawah umur yang terdaftar dapat mengunjungi Tempat HM, dan selanjutnya mengikat ahli waris, perwakilan, dan penerus dari orang yang bertanda tangan di bawah ini dan anak di bawah umur.
+
+Saya akan mematuhi semua tanda, pemberitahuan, arahan, instruksi atau permintaan HM, dan mengakui bahwa HM berhak (dalam kebijaksanaan mutlaknya) untuk menangguhkan atau membatalkan akses siapa pun ke Aktivitas HM dan/atau Fasilitas HM apa pun, tanpa pengembalian dana atau kompensasi, atas ketidakpatuhan terhadap Ketentuan Penjualan, tanda, pemberitahuan, arahan, instruksi atau permintaan HM, atas perilaku yang tidak aman, sembrono atau ceroboh, untuk menjamin keselamatan, keamanan atau ketertiban di Tempat HM, atau jika HM menganggap bahwa keadaan memang memerlukannya.
+
+Masing-masing ketentuan Pengecualian dan Persetujuan ini harus tunduk dan berlaku sejauh diizinkan oleh hukum. Jika terjadi pertentangan dengan Ketentuan Penjualan, ketentuan terkait Pengecualian dan Persetujuan ini yang akan berlaku.
+
+Ketentuan apa pun yang disebutkan di sini yang dianggap tidak sah, tidak berlaku, atau tidak dapat dilaksanakan, akan menjadi tidak efektif hanya sepanjang ketidakabsahan, ketidakberlakuan, atau tidak dapat dilaksanakannya hal tersebut, tanpa mempengaruhi ketentuan lain di sini yang akan tetap mempunyai kekuatan dan efek penuh, dan akan dianggap diubah seperlunya untuk memberikan dampak yang sedekat mungkin dengan maksud dan tujuan ketentuan yang tidak sah, tidak berlaku, atau tidak dapat dilaksanakan.
+
+Saya, untuk diri saya sendiri dan/atau untuk anak di bawah umur yang terdaftar sebagai (atau sebagai agen resmi dari) orang tua, wali sah, wali mereka, telah membaca dengan cermat Pengecualian dan Persetujuan ini, memahami sepenuhnya ketentuan-ketentuannya, dan menandatanganinya dengan bebas dan sukarela.
+
+Saya memahami bahwa saya, dan anak-anak di bawah umur yang terdaftar, telah melepaskan hak-hak substansial dengan menandatanganinya, dan setuju untuk terikat oleh ketentuan-ketentuannya untuk diri saya sendiri dan atas nama anak-anak di bawah umur yang terdaftar.
+
+Saya secara tidak dapat ditarik kembali dan secara tegas menyetujui bahwa isi yang terkandung dalam Pengecualian dan Persetujuan ini tidak lebih dari wajar dan diperlukan untuk melindungi kepentingan PT DUE, namun jika ada pembatasan tersebut yang akan dianggap batal namun akan sah jika dihapus sebagian atau dikurangi penerapannya, pembatasan tersebut akan berlaku dengan penghapusan atau modifikasi seperlunya agar pembatasan tersebut sah dan dapat dilaksanakan.
+
+Dengan menandatangani Pengecualian dan Persetujuan ini, saya dengan ini menyatakan dan menjamin kepada PT DUE bahwa saya mempunyai semua kuasa dan wewenang hukum yang diperlukan dan telah memperoleh semua izin dan persetujuan yang diperlukan, termasuk persetujuan pasangan dan/atau orang tua anak (sesuai keadaannya), bila diperlukan, untuk mengadakan dan melaksanakan Pengecualian dan Persetujuan ini dan Pengecualian dan Persetujuan ini merupakan kewajiban saya yang sah dan mengikat secara hukum, yang dapat dilaksanakan sesuai dengan ketentuannya.
+
+Pengecualian dan Persetujuan ini akan diatur oleh dan ditafsirkan sesuai dengan hukum Indonesia dan pengadilan Indonesia mempunyai yurisdiksi eksklusif atas setiap perselisihan yang timbul sehubungan dengan Pengecualian dan Persetujuan ini. Jika ada bagian dari ketentuan dalam Pengacualian dan Persetujuan ini yang ternyata batal atau tidak dapat dilaksanakan menurut hukum Indonesia, bagian lainnya akan tetap mempunyai kekuatan dan pengaruh penuh.
+EOD,
+
+    'please_sign_below' => 'Silakan tanda tangani di bawah ini:',
+    'waiver_notice_en_id' => 'Dokumen ini dibuat dalam Bahasa Inggris dan Bahasa Indonesia. Jika terjadi perbedaan, versi Bahasa Indonesia yang akan berlaku.',
+    'waiver_confirmation_truth' => 'Saya menyatakan bahwa informasi yang saya berikan adalah benar dan akurat.',
+    'age_caution' => 'Anak berusia 18 tahun atau lebih tidak bisa ditambahkan.',
+    'waiver_completed' => 'Waiver Kamu Telah Diselesaikan!',
+    'email_waiver_completed_title' => 'Halo, Waiver-mu telah berhasil diselesaikan!',
+    'email_waiver_completed_message' => 'Kamu selangkah lagi lebih dekat untuk <strong>MOVE TO JOY!</strong><br>
+                Terima kasih atas kunjunganmu ke <strong>Hellomonster!</strong>',
+    'email_greeting_closing' => 'Salam hangat,<br><br><strong>Hellomonster</strong>',
+    'created_at' => 'Dibuat Pada',
+    'alert_age_title' => 'Usia di bawah 18 tahun',
+    'alert_age_desc' => 'Maaf, Anda belum memenuhi syarat untuk melanjutkan pengisian form.',
+    'sign_success' => 'Tanda tangan berhasil disimpan.',
+    'placehoder_date' => 'Tanggal',
+    'placehoder_month' => 'Pilih Bulan',
+    'placehoder_day' => 'Hari',
+    'placehoder_year' => 'Tahun',
+    'loading' => 'Memproses',
+    'notif_new_member_title' => 'Member Baru',
+    'notif_new_member_message' => 'Member baru dengan nama {name} telah berhasil menandatangani waiver.',
 ];

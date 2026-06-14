@@ -1,8 +1,9 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
 
-<div class="space-y-5 w-[500px] max-w-full px-6 text-gray-900 relative z-10">
-  <p class="font-secondary text-2xl leading-snug text-left">
+<div class="w-full max-w-md mx-auto px-4 sm:px-6 space-y-5 text-gray-900 relative z-10 mt-10">
+
+  <p class="text-lg sm:text-2xl leading-snug text-left">
     <?= lang('Text.enter_email_message') ?>
   </p>
 
@@ -14,19 +15,19 @@
       name="email"
       placeholder="<?= lang('Text.placeholder_email') ?>"
       required
-      class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary font-secondary">
+      class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
     <button
       type="submit"
       class="w-full py-2 px-4 bg-primary text-white text-base font-semibold rounded-md hover:bg-blue-700 transition">
       <?= lang('Text.next') ?>
     </button>
   </form>
-
+  <!-- 
   <a
     href="/membership"
     class="block w-full py-2 text-center bg-softgray text-gray-700 rounded-md hover:bg-gray-300 font-semibold font-secondary">
     <?= lang('Text.buy_membership') ?>
-  </a>
+  </a> -->
 </div>
 
 <!-- ✅ Loading Overlay -->
@@ -41,10 +42,20 @@
   </div>
 </div>
 
+
 <script>
   document.getElementById('emailForm').addEventListener('submit', function() {
+    window.history.replaceState(null, "", window.location.href);
+    window.history.pushState(null, "", window.location.href);
     document.getElementById('loadingOverlay').classList.remove('hidden');
   });
 </script>
+
+
+<?php if ((session()->get('waiver_step_1') || session()->get('waiver_step_2')) && session()->get('waiver_member_id')): ?>
+  <script>
+    window.location.href = "/waiver?id=<?= session()->get('waiver_member_id') ?>";
+  </script>
+<?php endif; ?>
 
 <?= $this->endSection() ?>

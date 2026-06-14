@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Member - Hellomonster</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="<?= base_url('/assets/favicon.ico') ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
 
     <script>
@@ -71,15 +72,14 @@
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div class="min-h-screen flex flex-col">
         <!-- Navbar -->
-        <header class="bg-white shadow p-4">
-            <div class="container mx-auto flex justify-between items-center">
+        <header class="bg-white shadow px-4 py-4">
+            <div class="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div class="font-bold text-lg">
                     <a href="/">
-                        <img src="<?= base_url(); ?>/assets/img/Hello-Monster_Branding-Phase-1 - 1-_page-00071e5.png" alt="hellomonster-logo" class="w-24 h-auto">
+                        <img src="<?= esc($logo_src) ?>" alt="hellomonster-logo" class="w-20 sm:w-24 h-auto">
                     </a>
                 </div>
-                <div class="flex items-center gap-4">
-
+                <div class="flex items-center gap-2 flex-wrap justify-center sm:justify-end">
                     <!-- Language Selector -->
                     <form action="<?= base_url('language') ?>" method="post">
                         <?= csrf_field() ?>
@@ -92,7 +92,9 @@
                     <!-- Logout -->
                     <a href="/logout" class="text-sm text-red-500 hover:underline">Logout</a>
                 </div>
+            </div>
         </header>
+
 
         <!-- Content -->
         <main class="flex-1 container mx-auto py-6">
